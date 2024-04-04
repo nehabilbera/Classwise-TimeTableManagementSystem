@@ -1,0 +1,29 @@
+{% extends 'timetableapp/main.html' %}
+{% load static %}
+{% block content %}
+
+     <div class="display">
+        <div class="box">
+            <div class="header">
+                Assign Course To Class
+            </div>
+            <br><br>
+            <div class="form">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    {% load crispy_forms_tags %}
+                    
+                    {{ sectioncourse|crispy }}
+                    <input type="submit" value="Add Course" class="saveButton">
+                </form>
+            </div>
+            
+        </div>
+
+            <img class="gif" alt="books" src="{% static 'media/21903-online-class-animation.gif' %}">
+            <div class="viewtable"><p>You can view your added list here.<a href="{% url 'view-classcourse' %}">View List</a></p></div>
+
+    </div>
+
+
+{% endblock %}

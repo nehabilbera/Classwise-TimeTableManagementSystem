@@ -1,0 +1,26 @@
+{% extends 'timetableapp/main.html' %}
+{% load static %}
+{% block content %}
+     <div class="display">
+        <div class="box">
+            <div class="header">
+                Activity
+            </div>
+            <br><br>
+            <div class="form">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    {% load crispy_forms_tags %}
+                    {{ actform|crispy }}
+                    <input type="submit" value="Save Activity" class="saveButton">
+                </form>
+            </div>
+        </div>
+
+            <img class="gif" alt="books" src="{% static 'media/21903-online-class-animation.gif' %}">
+            <div class="viewtable"><p>You can view timetable here.<a href="{% url 'timetable' section.class_id %}">View TimeTable</a></p></div>
+
+    </div>
+
+
+{% endblock %}
