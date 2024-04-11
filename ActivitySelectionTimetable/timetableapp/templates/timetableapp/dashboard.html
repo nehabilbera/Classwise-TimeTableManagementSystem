@@ -1,1 +1,75 @@
-teacher dashboard will be shown here;
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Login</title>
+    <!-- <link rel="stylesheet" href="{% static '/css/teacher.css' %}"> -->
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .login-container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+            
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Teacher Dashboard</h2>
+        <div class="input-group">
+            <label for="name">Name : {abc}</label>
+        </div>
+        <div class="input-group">
+            <label for="name">Email : {abc@mnnit.ac.in}</label>
+        </div>
+        <br>
+        <div class="input-group">
+            <table>Timetable shown here</table>
+        </div>
+    </div>
+</body>
+</html>
