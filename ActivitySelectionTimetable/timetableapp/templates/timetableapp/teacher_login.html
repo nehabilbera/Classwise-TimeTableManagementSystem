@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Login</title>
+    <link rel="stylesheet" href="{% static '/css/teacher.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Teacher Login</h2>
+        <form method="post" action="" id="loginForm">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" placeholder="abc@123" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p style="color: red; font-size: small;">{{message}}</p>
+    </div>
+</body>
+</html>

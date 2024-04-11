@@ -35,6 +35,7 @@ class Professor(models.Model):
     professor_name = models.CharField(max_length=2000)
     working_hours = models.IntegerField(null=True,default=100)
     available_hours = models.IntegerField(null=True,default=100)
+    professor_email = models.EmailField(default="")
     def __str__(self):
         return self.professor_name
     

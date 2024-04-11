@@ -12,10 +12,14 @@ from django.db import IntegrityError
 
 errors = {}
 
+@login_required(login_url='login')
+def dashboard(request):
+    return render(request, 'timetableapp/dashboard.html')
+
 def loginPage(request):
     context = {}
     if request.user.is_authenticated:
-        return redirect('selection')
+        return redirect('dashboard')
     else:
         
         if request.method == 'POST':
@@ -24,11 +28,11 @@ def loginPage(request):
             user = authenticate(request, username=username, password= password )
             if user is not None:
                 login(request, user)
-                return redirect('selection')
+                return redirect('dashboard')
             else:
                 context['message'] = 'Username or Password is Incorrect.'
         
-        return render(request, 'timetableapp/login.html', context)
+        return render(request, 'timetableapp/teacher_login.html', context)
 
 
 def Logout(request):
