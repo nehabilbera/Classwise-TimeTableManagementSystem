@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Login</title>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+  }
+  .container{
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+</style>
+
+</head>
+<body>
+<div class="container">
+  <h2><center>Student</center></h2>
+  <form method="post" action="" id="loginForm">
+    {% csrf_token %}
+  <div class="form-group">
+    <label for="course">Course:</label>
+    <select id="course">
+      <option value="MCA">MCA</option>
+      <option value="Btech">Btech-CSE</option>
+      <option value="Btech">Btech-ECE</option>
+      <option value="Btech">Btech-ME</option>
+      <option value="Mtech">Mtech-CSE</option>
+      <option value="Btech">Mtech-ECE</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="semester">Semester:</label>
+    <select id="semester">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+    </select>
+  </div>
+  <center><button>Submit</button></center>
+</form>
+<!-- <p style="color: red; font-size: small;">{{message}}</p> -->
+</div>
+</body>
+</html>

@@ -34,6 +34,12 @@ def loginPage(request):
         
         return render(request, 'timetableapp/teacher_login.html', context)
 
+def student_timetable(request):
+    return render(request, 'timetableapp/student_timetable.html')
+
+def student_loginPage(request):
+    return render(request, 'timetableapp/student.html')
+
 
 def Logout(request):
     logout(request)
