@@ -14,7 +14,15 @@ errors = {}
 
 @login_required(login_url='login')
 def dashboard(request):
-    return render(request, 'teacher/dashboard.html')
+    professor_list = Professor.objects.filter(user=request.user)
+
+    if len(professor_list) == 0:
+        return render(request, "teacher/dashboard.html", {})
+
+    context = {
+        "professor_details": professor_list[0]
+    }
+    return render(request, 'teacher/dashboard.html', context)
 
 def loginPage(request):
     context = {}
