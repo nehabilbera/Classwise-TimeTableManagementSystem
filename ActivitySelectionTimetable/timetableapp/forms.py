@@ -29,7 +29,7 @@ class ProfessorForm(ModelForm):
     
     class Meta:
         model = Professor
-        fields = ['user','professor_id', 'professor_name', 'working_hours','available_hours']
+        fields = ['user','professor_id', 'professor_name', 'professor_email', 'working_hours','available_hours']
         exclude = ['user']
         labels = {}
 

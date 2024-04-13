@@ -18,24 +18,38 @@
             <thead class="table-header" style="color: white;">
             <tr>
                 <div class="header__item filter__link"  >
+                    <th scope="col" class="text-center" >Professor ID</th>
+                </div>
+                <div class="header__item filter__link"  >
                     <th scope="col" class="text-center" >Professor Name</th>
-                 </div>
-                 <div class="header__item filter__link" >
-                   <th class="text-center" scope="col" >Working Hours</th>
-                 </div>
-                 <div class="header__item filter__link" >
-                     <th class="text-center" scope="col" > Update</th>
-                 </div>
-                 <div class="header__item filter__link" >
-                      <th class="text-center" scope="col" >Delete</th>
-                 </div>
+                </div>
+                <div class="header__item filter__link"  >
+                    <th scope="col" class="text-center" >Professor Email</th>
+                </div>
+                <div class="header__item filter__link" >
+                    <th class="text-center" scope="col" >Working Hours</th>
+                </div>
+                <div class="header__item filter__link" >
+                    <th class="text-center" scope="col" > Update</th>
+                </div>
+                <div class="header__item filter__link" >
+                    <th class="text-center" scope="col" >Delete</th>
+                </div>
             </tr>
             </thead>
             <tbody class="tab-content">
                 {% for prof in professor1 %}
                 <tr class="table-row text-center">
                     <td class="table-data">
+                        {{ prof.professor_id }}
+                    </td>
+
+                    <td class="table-data">
                         {{ prof.professor_name }}
+                    </td>
+
+                    <td class="table-data">
+                        {{ prof.professor_email }}
                     </td>
                     
                     <td class="table-data">

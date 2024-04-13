@@ -14,7 +14,15 @@ errors = {}
 
 @login_required(login_url='login')
 def dashboard(request):
-    return render(request, 'timetableapp/dashboard.html')
+    professor_list = Professor.objects.filter(user=request.user)
+
+    if len(professor_list) == 0:
+        return render(request, "teacher/dashboard.html", {})
+
+    context = {
+        "professor_details": professor_list[0]
+    }
+    return render(request, 'teacher/dashboard.html', context)
 
 def loginPage(request):
     context = {}
@@ -32,13 +40,13 @@ def loginPage(request):
             else:
                 context['message'] = 'Username or Password is Incorrect.'
         
-        return render(request, 'timetableapp/teacher_login.html', context)
+        return render(request, 'teacher/teacher_login.html', context)
 
 def student_timetable(request):
     return render(request, 'timetableapp/student_timetable.html')
 
 def student_loginPage(request):
-    return render(request, 'timetableapp/student.html')
+    return render(request, 'student/student.html')
 
 
 def Logout(request):
