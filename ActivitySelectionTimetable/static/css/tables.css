@@ -9,6 +9,7 @@ body {
 
   font-family: "Roboto", sans-serif;
   margin: 0;
+  background-color: white;
 }
 
 h1,
@@ -136,3 +137,4 @@ h6 {
 	border-style: solid;
 	border-width: 3px ;
 }
+

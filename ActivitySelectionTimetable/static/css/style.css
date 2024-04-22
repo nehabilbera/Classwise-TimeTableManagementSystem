@@ -39,7 +39,9 @@ a.link:hover{
 	
 
 }
-
+.home_page{
+	background-color: red;
+}
 #tag{
 	font-size: 72px;
 	font-family: Roboto, sans-serif;

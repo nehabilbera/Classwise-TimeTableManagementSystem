@@ -5,17 +5,17 @@
     <div class="display">
         <div class="box">
             <div class="header">
-                Add Subject
+                Add Department
             </div>
             <div class="form">
                 <form method="POST" action="">
                     {% csrf_token %}
                     {% load crispy_forms_tags %}
-                    {{ course|crispy }}
+                    {{ department|crispy }}
                     <input type="submit" value="Save Subject" class="saveButton">
                 </form>
             </div>
-            <div class="viewtable"><p>You can view your added list here.<a href="{% url 'course_view' %}">View List</a></p></div>
+            <div class="viewtable"><p>You can view your added list here.<a href="{% url 'department_view' %}">View List</a></p></div>
         </div>
 
             

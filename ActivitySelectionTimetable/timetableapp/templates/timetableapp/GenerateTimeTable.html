@@ -5,10 +5,10 @@
 
     <div class="container-fluid">
 
-    <div class="search">
+    {% comment %} <div class="search">
         <input type="text" class="searchbox" placeholder="Search...">
         <input type="submit" value="Search" class="searchButton">
-        <a href="{% url 'add-class' %}"><button class="searchButton">Add Class </button></a>
+        <a href="{% url 'add-class' %}"><button class="searchButton">Add Class </button></a> {% endcomment %}
 
     </div>
     {% if errors %}

@@ -1,10 +1,11 @@
 from typing import Iterable
 from django.db import models
 from multiselectfield import MultiSelectField
+# form choicefield import ChoiceField
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from datetime import time
-
+import datetime
 class Course(models.Model):
     COURSE_TYPE = (
         ('Theory', 'Theory'),
@@ -33,14 +34,28 @@ class Professor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     professor_id = models.CharField(max_length=2000,primary_key=True)
     professor_name = models.CharField(max_length=2000)
+    dob = models.DateField(default=datetime.datetime.today().strftime('%Y-%m-%d'))
     working_hours = models.IntegerField(null=True,default=100)
     available_hours = models.IntegerField(null=True,default=100)
     professor_email = models.EmailField(default="")
     def __str__(self):
         return self.professor_name
     
+    # def clean(self):
+    #     # Call the clean() method of the superclass
+    #     super().clean()
+
+    #     # Check if birth_date is not None and is in the correct format (YYYY-MM-DD)
+    #     if self.birth_date:
+    #         try:
+    #             self.birth_date = self.birth_date.strftime('%Y-%m-%d')
+    #         except AttributeError:
+    #             raise ValidationError('Invalid date format. It must be in YYYY-MM-DD format.')
+    
 
 class Class(models.Model):
+    
+
     WEEK_DAY = (
     ('Monday', 'Monday'),
     ('Tuesday', 'Tuesday'),
@@ -52,20 +67,46 @@ class Class(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     class_id = models.CharField(max_length=2000)
     class_name = models.CharField(max_length=2000)
+    class_strength=models.IntegerField(null=True,default=100)
     week_day = MultiSelectField(max_length=2000, choices=WEEK_DAY, max_choices=6)
     no_sessions = models.PositiveIntegerField(default = 8)
     class_mins = models.PositiveIntegerField(default = 60)
     start_time = models.TimeField(default=time(00,00))
     end_time = models.TimeField(default=time(00,00))
     break_start = models.TimeField(null=True,blank=True)
-    break_start_2 = models.TimeField(null=True,blank=True)
+    
     break_end = models.TimeField(null=True,blank=True)
-    break_end_2 = models.TimeField(null=True,blank=True)
+    
     class Meta:
         unique_together = ('user','class_id')
 
     def __str__(self):
         return self.class_id + ' - ' + self.class_name
+
+class Department(models.Model):
+    SEMESTER = (
+    ('I' ,'I'),
+    ('II' ,'II'),
+    ('III' ,'III'),
+    ('IV' ,'IV'),
+    ('V' ,'V'),
+    ('VI' ,'VI'),
+    ('VII' ,'VII'),
+    ('VIII' ,'VIII'),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    department_name=models.CharField(max_length=200)
+    branch_name=models.CharField(max_length=200)
+    semester=MultiSelectField(max_length=2000, choices=SEMESTER, max_choices=1)
+    students_length=models.IntegerField(default=100)
+
+    class Meta:
+        unique_together = ('user','department_name','branch_name','semester','students_length')
+
+    def __str__(self):
+        return self.department + ' - ' + self.branch_name + '-' + self.semster + '-' +self.students_length
+
+
 
 
 # table to store courses for class

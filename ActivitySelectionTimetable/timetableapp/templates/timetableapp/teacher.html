@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <title>Teacher Login</title>
+    <link rel="stylesheet" href="{% static 'css/teacher.css' %}">
+</head>
+<body>
+    <div class="teacher-container">
+    <div class="login-container">
+        <h2>Teacher Login</h2>
+        {% if error_message %}
+        <p>{{ error_message }}</p>
+        {% endif %}
+        <form method='post' action="",id="loginForm">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="professor_name">Email</label>
+                <input type="text" id="professor_name" placeholder="abc@mnnit.ac.in" name="professor_name" required>
+            </div>
+            <div class="input-group">
+                <label for="professor_email">Password</label>
+                <input type="email" placeholder="abc@123" id="professor_email" name="professor_email" required>
+            </div>
+            <input type="submit">
+        </form>
+    </div>
+</div>
+     {% comment %} <script src="{% static 'teacher.js' %}"></script> {% endcomment %}
+</body>
+</html>
