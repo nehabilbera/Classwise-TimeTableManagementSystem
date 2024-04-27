@@ -4,16 +4,29 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 
-
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
 .navbar {
     padding: 15px 10px;
     background: #fff;
+    display: flex;
+    justify-content: space-between;
     border: none;
     border-radius: 0;
-    margin-bottom: 40px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
-
+/* .collapse {
+    display: flex;
+    justify-content: space-between;
+} */
+.navbar-nav{
+    display: flex;
+    align-items: center;
+    align-items: center;
+}
 .navbar-btn {
     box-shadow: none;
     outline: none !important;

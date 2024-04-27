@@ -1,11 +1,43 @@
 
+        .data{
+            height: 100vh;
+            width: 100vw;
+            background-color: orange;
+            display:flex;
+            justify-content: start;
+           
+        }
+
+        .professor_data{
+            
+            height: 100px;
+            width: 500px;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            margin-top:50px;
+            background-color: cyan;
+            padding:20px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            gap:10px;
+        }
+        .text1,.text2{
+            font-size: 20px;
+        }
+        
+        
         body {
             font-family: Arial, sans-serif;
         }
-
+        .teacher-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         .login-container {
             width: 300px;
             margin: 0 auto;
+            
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;

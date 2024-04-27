@@ -138,6 +138,69 @@ def deleteCourse(request, pk):
 
     return render(request, 'timetableapp/delete.html', context)
 
+#===============================================================================================
+@login_required(login_url='login')
+def DepartmentView(request):
+    department = DepartmentForm()
+    department1 = Department.objects.filter(user=request.user)
+
+    context = {'department': department, 'department1': department1}
+    if request.method == 'POST':
+        department = DepartmentForm(request.POST)
+        if department.is_valid():
+            # messages.success(request, 'Professor has been added successfully.')
+            context['success'] = 'form has been added successfully.'
+            depart = department.save(commit = False)
+            depart.user = request.user
+            depart.save()
+        else:
+            # messages.error(request, 'Professor already exists or you have added wrong attributes.')
+            context['message'] = 'department ID already exists or you have added wrong attributes.'
+    return render(request, 'timetableapp/Department.html', context)
+
+@login_required(login_url='login')
+def DepartmentTable(request):
+    department1 = Department.objects.filter(user=request.user)
+    context = {'department1': department1}
+    return render(request, 'timetableapp/DepartmentTable.html', context)
+
+@login_required(login_url='login')
+def updateDepartmentView(request, pk):
+    depart = Department.objects.get(user=request.user,department_name=pk)
+    form = DepartmentForm(instance=depart)
+    context = {'form': form}
+    if request.method == 'POST':
+        form = DepartmentForm(request.POST, instance=depart)
+        if form.is_valid():
+            formsave = form.save(commit=False)
+            if formsave.department_name==pk :
+                formsave.save()
+                return redirect('/department_view')
+            elif Department.objects.filter(user=request.user,department_name=formsave.department_name).count()==0:
+                formsave.save()
+                Department.objects.get(user=request.user,department_name=pk).delete()
+                return redirect('/department_view')
+            else:
+                context['message'] = 'Department  already exists'
+        else:
+            context['message'] = 'Invalid details.'
+
+    return render(request, 'timetableapp/Department.html', context)
+
+@login_required(login_url='login')
+def deleteDepartment(request, pk):
+    deletedepartment = Department.objects.get(user=request.user,department_name=pk)
+    context = {'delete': deletedepartment}
+    if request.method == 'POST':
+        deletedepartment.delete()
+        return redirect('department_view')
+
+    return render(request, 'timetableapp/deleteDepartment.html', context)
+
+
+
+
+#==================================================================================================
 
 @login_required(login_url='login')
 def ProfessorView(request):
@@ -318,11 +381,11 @@ def GenerateTimeTable(request, id):
         sectioncourses = list(ClassCourse.objects.filter(user=currentUser,class_id=section))
     except Class.DoesNotExist:
         messages.error(request, 'Class does not exist')
-        return redirect('class_view')
+        return redirect('generate-timetable')
 
     if len(sectioncourses) <= 0:
         messages.error(request, 'Courses does not exist.')
-        return redirect('class_view')
+        return redirect('generate-timetable')
 
     if Activity.objects.filter(user=currentUser,activity_type='Replaceable',class_id=id).count() != 0:
         deleteActivities(currentUser,id,"Theory")
@@ -491,7 +554,7 @@ def GenerateTimeTable(request, id):
                     j += 1
 
     # messages.success(request, 'Timetable generated')
-    return redirect('class_view')
+    return redirect('generate-timetable')
 
 def deleteActivities(usr,id,type=None):
     if type == None:
@@ -543,7 +606,7 @@ def TimeTableView(request, id):
         section = Class.objects.get(user=request.user,class_id=id)
     except Class.DoesNotExist:
         # messages.error(request, 'Activity does not exist')
-        return redirect('class_view')
+        return redirect('generate-timetable')
 
     courses = Course.objects.filter(user=request.user)
     professors = Professor.objects.filter(user=request.user)
@@ -588,3 +651,28 @@ def AddActivity(request, pk):
         else:
             messages.error(request, 'Error editing activity')
     return render(request, 'timetableapp/AddActivity.html', context)
+
+def teacherView(request):
+    if request.method == 'POST':
+        # form = ProfessorForm(request.POST)
+        
+        professor_name = request.POST.get('professor_name')
+        professor_email = request.POST.get('professor_email')
+            # user=authenticate(request,username=professor_name,password=professor_email)
+            
+        professor = Professor.objects.filter(professor_name=professor_name, professor_email=professor_email).first()
+        if professor is not None:
+            user = professor.user
+            # If professor is found, create a user session
+            login(request, user)
+            context={'name':professor_name,'Email':professor_email}
+            return render(request,'timetableapp/teacher_deshboard.html',context)  # Redirect to profile page
+        else:
+            error_message = "Invalid professor name or email."  # Error message if authentication fails
+            return render(request,'timetableapp/teacher.html')
+
+    return render(request, 'timetableapp/teacher.html')
+    
+def professor_logout(request):
+    logout(request)
+    return redirect('teacher')

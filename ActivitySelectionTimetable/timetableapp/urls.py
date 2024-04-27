@@ -22,7 +22,12 @@ urlpatterns = [
     path('professor_view/', views.ProfessorTable, name='professor_view'),
     path('update-professor/<str:pk>/', views.updateProfessorView, name='update-professor'),
     path('delete-professor/<str:pk>/', views.deleteProfessor, name='delete-professor'),
-
+    
+    path('add-department/', views.DepartmentView, name='add-department'),
+    path('deparment_view/', views.DepartmentTable, name='department_view'),
+    path('update-department/<str:pk>/', views.updateDepartmentView, name='update-departmentview'),
+    path('delete-department/<str:pk>/', views.deleteDepartment, name='delete-department'),
+    
     path('add-class/', views.ClassView, name='add-class'),
     path('class-view/', views.ClassTable, name='class_view'),
     path('update-class/<str:pk>/', views.updateClassView, name='update-classview'),
@@ -35,6 +40,8 @@ urlpatterns = [
 
     path('generate-timetable/<str:id>/', views.GenerateTimeTable, name='generate-timetable'),
     path('timetable/<str:id>/', views.TimeTableView, name='timetable'),
-    path('activity/<str:pk>/', views.AddActivity, name='add-activity')
+    path('activity/<str:pk>/', views.AddActivity, name='add-activity'),
 ############    path('timetable/', views.TimeTable, name='timetable'), #############
+    path('teacher/',views.teacherView,name='teacher'),
+    path('professor_logout/', views.professor_logout, name="professor_logout")
 ]

@@ -21,7 +21,7 @@ class CourseForm(ModelForm):
         model = Course
         fields = ['user','course_id', 'course_name', 'course_type', 'credit_hours', 'contact_hours']
         exclude = ['user']
-        labels = {'credit_hours':'No of classes per week',
+        labels = {'course_id':'Subject id','course_name':'Subject name','course_type':'Subject type','credit_hours':'No of classes per week',
                   'contact_hours':'Total hours per week'}
 
 
@@ -29,9 +29,9 @@ class ProfessorForm(ModelForm):
     
     class Meta:
         model = Professor
-        fields = ['user','professor_id', 'professor_name', 'professor_email', 'working_hours','available_hours']
+        fields = ['user','professor_id', 'professor_name','dob','professor_email', 'working_hours','available_hours']
         exclude = ['user']
-        labels = {}
+        labels = {'dob':'DOB(YYYY-MM-DD)'}
 
 class TimeIn(TimeInput):
     input_type = "time"
@@ -39,8 +39,8 @@ class TimeIn(TimeInput):
 class ClassForm(ModelForm):
     class Meta:
         model = Class
-        fields = ['user','class_id','class_name','week_day','no_sessions','class_mins','start_time',
-                    'end_time','break_start','break_end','break_start_2','break_end_2']
+        fields = ['user','class_id','class_name','class_strength','week_day','no_sessions','class_mins','start_time',
+                    'end_time','break_start','break_end']
         exclude = ['user']
         labels = {
             # 'class_id':'Class ID',
@@ -63,13 +63,32 @@ class ClassForm(ModelForm):
             "break_start_2": TimeIn(),
             "break_end_2": TimeIn(),
         }
-        
+class DepartmentForm(ModelForm):
+    class Meta:
+        model= Department
+        field=['user','department_name','branch_name','semester','students_length']
+        exclude=['user']
+        labels={}
+        widgets = {
+            
+            
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 class ClassCourseForm(ModelForm):
     class Meta:
         model = ClassCourse
         fields = ['user','class_id','course_id','professor_id']
         exclude = ['user']
-
+        labels={'course_id':'Subject name','professor_id':'professor_name'}
     def __init__(self, user, *args,  **kwargs):
         super(ClassCourseForm, self).__init__(*args, **kwargs)
         self.fields['class_id'].queryset = Class.objects.filter(user=user)

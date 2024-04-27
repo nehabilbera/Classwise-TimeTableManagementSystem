@@ -2,8 +2,12 @@
 {% load static %}
 {% block content %}
 
+<div class="boxcontainer">
     <div class="deleteBox">
-    <h3 id="deleteText">Do You want to delete "{{ course_delete.course_id }}-{{ course_delete.course_name }}"?</h3>
+        <div class="text">
+            <h3 id="deleteText">Do You want to delete "{{ course_delete.course_id }}-{{ course_delete.course_name }}"?</h3>
+        </div>
+    <div class="operation">
         <form method="POST" action="{% url 'delete-course' course_delete.course_id %}">
 
     <input class="deleteButton" type="submit" value="Delete">
@@ -12,10 +16,8 @@
     <input class="cancelButton" type="button" value="Cancel">
     </a>
     </form>
-        <div>
-     <img class="deletegif" alt="books" src="{% static 'media/12818-file-recover.gif' %}">
-            </div>
+     </div>
     </div>
-
+<div>
 
 {% endblock %}

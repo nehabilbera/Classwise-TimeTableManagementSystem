@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static%}
+    <link rel="stylesheet" href="{% static 'css/teacher.css' %}">
+</head>
+<body>
+    <div class="data">
+        <div class="professor_data">
+            <div class="text1">
+                NAME:{{name}}
+            </div>
+            <div class="text2">
+                Email:{{Email}}
+            </div>
+    
+            <a class="professor_logout" href="{% url 'professor_logout' %}" style="background-color: red; color: black;">
+                Logout
+            </a>
+        </div>
+    </div>
+</body>
+</html>
