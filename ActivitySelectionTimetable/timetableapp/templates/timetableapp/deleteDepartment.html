@@ -3,19 +3,18 @@
 {% block content %}
 <div class="boxcontainer">
     <div class="deleteBox">
-    <h3 id="deleteText">Do You want to delete "{{ delete.class_id }} - {{ delete.class_name }}"?</h3>
+    <h3 id="deleteText">Do You want to delete "{{ delete.department_name }}"?</h3>
     <div class="operation">
-        <form method="POST" action="{% url 'delete-class' delete.class_id %}">
-        {% csrf_token %}
+        <form method="POST" action="{% url 'delete-department' delete.department_name %}">
 
     <input class="deleteButton" type="submit" value="Delete">
-    <a href="{% url 'class_view' %}">
+        {% csrf_token %}
+    <a href="{% url 'department_view' %}">
     <input class="cancelButton" type="button" value="Cancel">
     </a>
     </form>
     </div>
     </div>
 </div>
-
 
 {% endblock %}

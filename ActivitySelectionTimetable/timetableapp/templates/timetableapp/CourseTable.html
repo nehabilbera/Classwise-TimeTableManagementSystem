@@ -2,35 +2,34 @@
 {% load static %}
 {% block content %}
 
-
+<div class="viewcontainer">
 <div class="container-fluid">
 
     <div class="search">
         <input type="text" class="searchbox" placeholder="Search...">
         <input type="submit" value="Search" class="searchButton">
-        <a href="{% url 'add-course' %}"><button class="searchButton">Add Course </button></a>
+        <a href="{% url 'add-course' %}"><button class="searchButton">Add Subject </button></a>
 
     </div>
 
 
-	<div class="">
         <table class="table  text-center">
             <thead class="table-header" style="color: white;">
 			<tr>
                 <div class="header__item filter__link"  >
-                   <th scope="col" class="text-center" >Course ID</th>
+                   <th scope="col" class="text-center" >Subject ID</th>
                 </div>
                 <div class="header__item filter__link" >
-                  <th class="text-center" scope="col" >Course Name</th>
+                  <th class="text-center" scope="col" >Subject Name</th>
                 </div>
                 <div class="header__item filter__link" >
-                   <th class="text-center" scope="col" >Course Type</th>
+                   <th class="text-center" scope="col" >Subject Type</th>
                 </div>
                 <div class="header__item filter__link"  >
-                   <th class="text-center" scope="col" >Credit Hours</th>
+                   <th class="text-center" scope="col" >Classes per week</th>
                 </div>
                 <div class="header__item filter__link" >
-                   <th class="text-center" scope="col" >Contact Hours</th>
+                   <th class="text-center" scope="col" >Total hours per week</th>
                 </div>
                 <div class="header__item filter__link" >
                     <th class="text-center" scope="col" > Update</th>

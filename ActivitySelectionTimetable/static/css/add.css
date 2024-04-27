@@ -1,29 +1,139 @@
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+.display{
+    /* background-image: radial-gradient( circle 897px at 9% 80.3%,  rgba(55,60,245,1) 0%, rgba(234,161,15,0.90) 100.2% ); */
+    background-color: #7abecc;
+    display: flex;
+    min-height:100vh;
+    width: 100%;
+   /* position: relative; */
+    justify-content: center;
+    
+}
+
+/* .display.course_to_class{
+    height:100%;
+} */
+
+/* .display.professor{
+    height:200vh;
+    background-color: red;
+} */
 .box{
-    width: 32%;
-    height: 560px;
-    background: none;
-    border-radius: 14px;
-    margin-top: 3%;
-    margin-left: 5%;
-    border-color: black;
+    margin-top:0;
+    width: 40%;
+    /* position:absolute; */
+    height:100%;
+    /* background-color:cyan; */
+    /* border-radius: 14px; */
+    /* border:2px solid black; */
+    
+    /* margin-left: 5%; */
+    /* border-color: black; */
+    background-color: #74cfbf;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+    padding:10px;
+    margin-top:50px;
+    /* box-shadow: 0 1px 1px rgba(0,0,0,0.11), 0 2px 2px rgba(0,0,0,0.11), 0 4px 4px rgba(0,0,0,0.11), 0 8px 8px rgba(0,0,0,0.11), 0 16px 16px rgba(0,0,0,0.11), 0 32px 32px rgba(0,0,0,0.11); */
+    margin-bottom:25px;
+    display: flex;
+    /* justify-content: center;
+    align-items: center; */
+    flex-direction: column;
+    gap:15px;
 
     
 }
+.header{
+    font-family: Roboto, sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 12px;
+    margin-top:10px;
+    color: white;
+    /* background: black; */
+    /* border-radius: 10px 10px 0 0 ; */
+    height: 15%;
+}
+.boxcontainer
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:100vw;
+    background-color: #7abecc;
+    height:92.8vh;
+    
+}
+.operation{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+}
+.viewcontainer{
+    /* display: flex;
+    flex-direction: column; */
+    background-color: #7abecc;
+    min-height: 100vh;
+}
+.container-fluid
+{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+/* .innercontainer{
+    padding-left: 15px;
+    padding-right: 15px;
+} */
 .deleteBox{
-    width: 82%;
-    height: 100px;
-    border-radius: 14px;
-    margin-top: 3%;
-    margin-left: 5%;
-    border-color: black;
-    border-style: solid;
+
+    width: 40%;
+    height: 200px;
+   
+    padding:10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap:20px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+
+    background-color: #74cfbf;
 
 }
-.deletegif{
+@media (max-width:500px)
+{
+    .deleteBox{
+      width:90%;
+    }
+}
+@media (min-width:501px) and (max-width:700px){
+    .deleteBox{
+        width:70%;
+    }
+}
+@media (min-width:701px) and (max-width:1000px)
+{
+    .deleteBox{
+        width:60%;
+    }
+}
+/* .deletegif{
     margin-top:5%;
     margin-left: 40%;
     width: 30%;
-}
+} */
 #deleteText{
     font-family: Roboto, sans-serif;
     font-weight: normal;
@@ -45,8 +155,8 @@
     border-radius: 0;
     border-color: black;
     background: crimson;
-    margin-left: 40%;
 }
+
 .cancelButton{
     width: 90px;
     height: 50px;
@@ -60,23 +170,12 @@
     border-radius: 0;
     border-color: black;
     background: black;
-    margin-right: 35%;
+    
 }
 #courseName{
     color: red;
 }
-.header{
-    font-family: Roboto, sans-serif;
-    font-size: 28px;
-    font-weight: bold;
-    text-align: center;
-    text-transform: uppercase;
-    padding-top: 12px;
-    color: white;
-    background: black;
-    border-radius: 10px 10px 0 0 ;
-    height: 15%;
-}
+
 
 .form-control1{
     width: 70% !important;
@@ -103,8 +202,8 @@
 	color: black ;
 	text-align: center;
 	background: none;
-	margin-left: 25%;
-	margin-right: -30px;
+	margin-left: 15%;
+	/* margin-right: -30px; */
 	margin-top: 20px;
 	border-color: black ;
 	border-radius: 30px ;
@@ -118,9 +217,7 @@
     color: white;
 }
 
-.display{
-    display: inline;
-}
+
 .gif{
     width: 35%;
     float: right;
@@ -129,14 +226,14 @@
 
 }
 .viewtable{
-    float: right;
+    /* float: right; */
     font-family: Roboto, sans-serif;
     font-weight: bold;
     font-size: 14px;
     color: black;
     text-transform: capitalize;
-    margin-top: -70px;
-    margin-right: 15%;
+   
+    text-align: center;
 }
 .form-control{
     width: 70% !important;
@@ -152,17 +249,24 @@
     border-radius: 30px !important;
 
 }
-
-@media (min-width: 320px) and (max-width: 480px) {
+@media (max-width:300px)
+{
+    .saveButton{
+       width:150px;
+       height:50px;
+       font-size: 15px;
+    }
+}
+@media (min-width: 200px) and (max-width: 480px) {
     .box {
-        width: 100% !important;
+        width: 90% !important;
     }
     .gif{
         display: none;
     }
     .viewtable{
         text-align: center;
-        margin-top: 20% !important;
+        /* margin-top: 20% !important; */
     }
 	.margin{
 		margin:100%;
@@ -172,14 +276,14 @@
 @media (min-width: 481px) and (max-width: 600px) {
 
     .box {
-        width: 90% !important;
+        width: 85% !important;
     }
     .gif{
         display: none;
     }
     .viewtable{
         text-align: center;
-        margin-top: 20% !important;
+        /* margin-top: 20% !important; */
     }
 }
 
@@ -187,28 +291,28 @@
 @media (min-width: 601px) and (max-width: 767px) {
 
     .box {
-        width: 90% !important;
+        width: 80% !important;
     }
     .gif{
         display: none;
     }
-    .viewtable{
-        margin-top: 25%;
-        margin-right: 30%;
-    }
+    /* .viewtable{
+        /* margin-top: 25%; */
+        /* margin-right: 30%; 
+    } */
 }
 
 
-@media (min-width: 768px) and (max-width: 1080px) {
+@media (min-width: 768px) and (max-width:1000px){
 
     .box {
-        width: 90% !important;
+        width: 75% !important;
     }
     .gif{
         display: none;
     }
-    .viewtable{
-        margin-top: 5%;
-        margin-right: 30%;
-    }
+    /* .viewtable{
+        /* margin-top: 5%; */
+        /* margin-right: 30%; 
+    } */
 }

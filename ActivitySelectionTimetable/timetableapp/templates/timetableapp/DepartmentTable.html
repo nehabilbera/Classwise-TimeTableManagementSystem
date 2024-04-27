@@ -9,7 +9,7 @@
     <div class="search">
         <input type="text" class="searchbox" placeholder="Search...">
         <input type="submit" value="Search" class="searchButton">
-        <a href="{% url 'add-class' %}"><button class="searchButton">Add Class </button></a>
+        <a href="{% url 'add-department' %}"><button class="searchButton">Add Department </button></a>
 
     </div>
 
@@ -18,19 +18,20 @@
             <thead class="table-header" style="color: white;">
 			<tr>
                 <div class="header__item filter__link" >
-                   <th scope="col" class="text-center">Class ID</th>
-
-                {% comment %} </div>
-                <div class="header__item filter__link" >
-                    <th scope="col" class="text-center">Class Strength</th>
- 
-                 </div> {% endcomment %}
-                <div class="header__item filter__link">
-                  <th class="text-center" scope="col">Class Name</th>
+                   <th scope="col" class="text-center">Department name</th>
 
                 </div>
+                <div class="header__item filter__link" >
+                    <th scope="col" class="text-center">Branch name</th>
+ 
+                 </div> 
                 <div class="header__item filter__link">
-                    <th class="text-center" scope="col">Class Strength</th>
+                  <th class="text-center" scope="col">Semester</th>
+
+                </div>
+
+                <div class="header__item filter__link">
+                    <th class="text-center" scope="col">Strength</th>
   
                   </div>
 
@@ -55,16 +56,17 @@
 			
             
 			<tbody class="tab-content">
-                {% for section in sections %}
+                {% for department in department1 %}
 				    <tr class="table-row text-center">
-                        <th scope="row" class="table-data">{{ section.class_id }}</th>
+                        <th scope="row" class="table-data">{{ department.department_name }}</th>
                     					
-						<th scope="row" class="table-data"  >{{ section.class_name }}</th>
-                        <th scope="row" class="table-data">{{ section.class_strength }}</th>
+						<th scope="row" class="table-data"  >{{ department.branch_name }}</th>
+                        <th scope="row" class="table-data">{{ department.semester}}</th>
+                        <th scope="row" class="table-data">{{ department.students_length }}</th>
                   
-                        <th scope="row" class="table-data"> <a href="{% url 'update-classview' section.class_id %}" class="btn btn-sm btn-info">Update</a></th>
+                        <th scope="row" class="table-data"> <a href="{% url 'update-departmentview' department.department_name %}" class="btn btn-sm btn-info">Update</a></th>
                    
-                        <th scope="row" class="table-data"> <a href="{% url 'delete-class' section.class_id %}" class="btn btn-sm btn-danger" >Remove</a></th>
+                        <th scope="row" class="table-data"> <a href="{% url 'delete-department' department.department_name %}" class="btn btn-sm btn-danger" >Remove</a></th>
 
                         {% comment %} <th scope="row" class="table-data"> <a href="{% url 'generate-timetable' section.class_id %}" class="btn btn-sm btn-danger" >Generate Timetable</a></th>
                 
@@ -73,8 +75,8 @@
                 {% endfor %}
             </tbody>
         </table>
-      </div>
 </div>
+    </div>
 
 
 {% endblock %}

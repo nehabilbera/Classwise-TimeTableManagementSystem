@@ -1,21 +1,19 @@
 {% extends 'timetableapp/main.html' %}
 {% load static %}
 {% block content %}
-
+<div class="boxcontainer">
     <div class="deleteBox">
     <h3 id="deleteText">Do You want to delete "{{ delete.class_id }} - {{ delete.course_id }}"?</h3>
+    <div class="operation">
         <form method="POST" action="{% url 'delete-classcourse' delete.id %}">
-
     <input class="deleteButton" type="submit" value="Delete">
         {% csrf_token %}
     <a href="{% url 'view-classcourse' %}">
     <input class="cancelButton" type="button" value="Cancel">
     </a>
     </form>
-        <div>
-     <img class="deletegif" alt="books" src="{% static 'media/12818-file-recover.gif' %}">
-            </div>
+     </div>
     </div>
-
+</div>
 
 {% endblock %}

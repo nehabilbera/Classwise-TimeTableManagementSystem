@@ -2,18 +2,18 @@
 {% load static %}
 {% block content %}
 
-
+<div class="viewcontainer">
     <div class="container-fluid">
 
     <div class="search">
         <input type="text" class="searchbox" placeholder="Search...">
         <input type="submit" value="Search" class="searchButton">
-        <a href="{% url 'add-classcourse' %}"><button class="searchButton">Assign Course </button></a>
+        <a href="{% url 'add-classcourse' %}"><button class="searchButton">Assign Subject </button></a>
 
     </div>
 
 
-	<div class="" >
+
         <table class="table text-center">
             <thead class="table-header" style="color: white;">
 			<tr>
@@ -21,7 +21,7 @@
                    <th scope="col" class="text-center">Class</th>
                 </div>
                 <div class="header__item filter__link">
-                  <th class="text-center" scope="col">Course</th>
+                  <th class="text-center" scope="col">Subject</th>
                 </div>
                 <div class="header__item filter__link">
                    <th class="text-center" scope="col">Professor</th>
@@ -53,8 +53,8 @@
                 {% endfor %}
             </tbody>
         </table>
+      </div>
 </div>
-    </div>
 
 
 {% endblock %}
