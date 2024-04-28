@@ -17,7 +17,7 @@
             <thead class="table-header" style="color: white;">
 			<tr>
                 <div class="header__item filter__link"  >
-                   <th scope="col" class="text-center" >Subject ID</th>
+                   <th scope="col" class="text-center" >ID</th>
                 </div>
                 <div class="header__item filter__link" >
                     <th class="text-center" scope="col" >Course</th>
@@ -26,7 +26,10 @@
                   <th class="text-center" scope="col" >Subject Name</th>
                 </div>
                 <div class="header__item filter__link" >
-                   <th class="text-center" scope="col" >Subject Type</th>
+                   <th class="text-center" scope="col" >Type</th>
+                </div>
+                <div class="header__item filter__link" >
+                   <th class="text-center" scope="col" >Professor</th>
                 </div>
                 <div class="header__item filter__link"  >
                    <th class="text-center" scope="col" >Classes per week</th>
@@ -52,6 +55,8 @@
 						<th scope="row" class="table-data"  >{{ corse.course_name }}</th>
                        
 						<th scope="row" class="table-data"> {{ corse.course_type}}</th>
+
+						<th scope="row" class="table-data"> {{ corse.professor}}</th>
 
 						<th scope="row" class="table-data"> {{ corse.credit_hours}}</th>
                   
