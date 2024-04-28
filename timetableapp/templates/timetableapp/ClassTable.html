@@ -42,14 +42,14 @@
                      <th class="text-center" scope="col">Delete</th>
 
                 </div>
-                {% comment %} <div class="header__item filter__link">
+                <div class="header__item filter__link">
                     <th class="text-center" scope="col">Generate Timetable</th>
 
                 </div>
                 <div class="header__item filter__link">
                     <th class="text-center" scope="col">View Timetable</th>
 
-                </div> {% endcomment %}
+                </div>
 			</tr>	
             </thead>
 			
@@ -66,9 +66,9 @@
                    
                         <th scope="row" class="table-data"> <a href="{% url 'delete-class' section.class_id %}" class="btn btn-sm btn-danger" >Remove</a></th>
 
-                        {% comment %} <th scope="row" class="table-data"> <a href="{% url 'generate-timetable' section.class_id %}" class="btn btn-sm btn-danger" >Generate Timetable</a></th>
+                        <th scope="row" class="table-data"> <a href="{% url 'generate-timetable' section.class_id %}" class="btn btn-sm btn-danger" >Generate Timetable</a></th>
                 
-                        <th scope="row" class="table-data"> <a href="{% url 'timetable' section.class_id %}" class="btn btn-sm btn-danger" >View Timetable</a></th> {% endcomment %}
+                        <th scope="row" class="table-data"> <a href="{% url 'timetable' section.class_id %}" class="btn btn-sm btn-danger" >View Timetable</a></th>
 					</tr>
                 {% endfor %}
             </tbody>
