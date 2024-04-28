@@ -27,7 +27,7 @@ def dashboard(request):
 def loginPage(request):
     context = {}
     if request.user.is_authenticated:
-        return redirect('dashboard')
+        return redirect('selection')
     else:
         
         if request.method == 'POST':
@@ -36,7 +36,7 @@ def loginPage(request):
             user = authenticate(request, username=username, password= password )
             if user is not None:
                 login(request, user)
-                return redirect('dashboard')
+                return redirect('selection')
             else:
                 context['message'] = 'Username or Password is Incorrect.'
         
