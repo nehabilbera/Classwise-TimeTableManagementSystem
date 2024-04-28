@@ -12,15 +12,11 @@
                     {% csrf_token %}
                     {% load crispy_forms_tags %}
                     {{ department|crispy }}
-                    <input type="submit" value="Save Subject" class="saveButton">
+                    <input type="submit" value="Save Department" class="saveButton">
                 </form>
             </div>
             <div class="viewtable"><p>You can view your added list here.<a href="{% url 'department_view' %}">View List</a></p></div>
         </div>
-
-            
-        
-
     </div>
 
 
