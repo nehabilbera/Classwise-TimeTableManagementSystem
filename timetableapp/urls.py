@@ -3,13 +3,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='selection'),
+    path('', views.home, name='home'),
 
-    path('student_timetable/', views.student_timetable, name="student_timetable"),
-    path('student/', views.student_loginPage, name="student"),
+    # path('student_timetable/', views.student_timetable, name="student_timetable"),
+    # path('student/', views.student_loginPage, name="student"),
 
-    path('', views.home, name='selection'),
-    path('dashboard/', views.dashboard, name="dashboard"),
+    # path('dashboard/', views.dashboard, name="dashboard"),
     path('login/', views.loginPage, name="login"),
     path('logout/', views.Logout, name="logout"),
 
@@ -38,10 +37,14 @@ urlpatterns = [
     path('update-classcourse/<str:pk>/', views.updateClassCourse, name='update-classcourse'),
     path('delete-classcourse/<str:pk>/', views.deleteClassCourse, name='delete-classcourse'),
 
+
+
     path('generate-timetable/<str:id>/', views.GenerateTimeTable, name='generate-timetable'),
     path('timetable/<str:id>/', views.TimeTableView, name='timetable'),
     path('activity/<str:pk>/', views.AddActivity, name='add-activity'),
+    
+
+    
 ############    path('timetable/', views.TimeTable, name='timetable'), #############
-    path('teacher/',views.teacherView,name='teacher'),
-    path('professor_logout/', views.professor_logout, name="professor_logout")
+
 ]

@@ -12,22 +12,24 @@ from django.db import IntegrityError
 
 errors = {}
 
-@login_required(login_url='login')
-def dashboard(request):
-    professor_list = Professor.objects.filter(user=request.user)
+'''
+# @login_required(login_url='login')
+# def dashboard(request):
+#     professor_list = Professor.objects.filter(user=request.user)
 
-    if len(professor_list) == 0:
-        return render(request, "teacher/dashboard.html", {})
+#     if len(professor_list) == 0:
+#         return render(request, "teacher/dashboard.html", {})
 
-    context = {
-        "professor_details": professor_list[0]
-    }
-    return render(request, 'teacher/dashboard.html', context)
+#     context = {
+#         "professor_details": professor_list[0]
+#     }
+#     return render(request, 'teacher/dashboard.html', context)
+'''
 
 def loginPage(request):
     context = {}
     if request.user.is_authenticated:
-        return redirect('selection')
+        return redirect('home')
     else:
         
         if request.method == 'POST':
@@ -36,27 +38,26 @@ def loginPage(request):
             user = authenticate(request, username=username, password= password )
             if user is not None:
                 login(request, user)
-                return redirect('selection')
+                return redirect('home')
             else:
                 context['message'] = 'Username or Password is Incorrect.'
         
         return render(request, 'teacher/teacher_login.html', context)
 
+def Logout(request):
+    logout(request)
+    return redirect('login')
+
+'''
 def student_timetable(request):
     return render(request, 'timetableapp/student_timetable.html')
 
 def student_loginPage(request):
     return render(request, 'student/student.html')
 
-
-def Logout(request):
-    logout(request)
-    return redirect('login')
-
-
 def registerPage(request):
     if request.user.is_authenticated:
-        return redirect('selection')
+        return redirect('home')
     else:
         form = CreateUserForm()
         context = {}
@@ -71,6 +72,8 @@ def registerPage(request):
                 return redirect('login')    
         context = {'form':form}
         return render(request, 'timetableapp/register.html', context)
+'''
+
 
 @login_required(login_url='login')
 def home(request):
@@ -106,6 +109,7 @@ def CourseTable(request):
     context = {'course': course}
     return render(request, 'timetableapp/CourseTable.html', context)
 
+
 @login_required(login_url='login')
 def updateCourseView(request, pk):
     form = Course.objects.get(user=request.user,course_id=pk)
@@ -128,6 +132,7 @@ def updateCourseView(request, pk):
             context['message']="Invalid details."
     return render(request, 'timetableapp/AddCourse.html', context)
 
+
 @login_required(login_url='login')
 def deleteCourse(request, pk):
     delete_course = Course.objects.get(user=request.user,course_id=pk)
@@ -138,7 +143,9 @@ def deleteCourse(request, pk):
 
     return render(request, 'timetableapp/delete.html', context)
 
+
 #===============================================================================================
+
 @login_required(login_url='login')
 def DepartmentView(request):
     department = DepartmentForm()
@@ -158,11 +165,13 @@ def DepartmentView(request):
             context['message'] = 'department ID already exists or you have added wrong attributes.'
     return render(request, 'timetableapp/Department.html', context)
 
+
 @login_required(login_url='login')
 def DepartmentTable(request):
     department1 = Department.objects.filter(user=request.user)
     context = {'department1': department1}
     return render(request, 'timetableapp/DepartmentTable.html', context)
+
 
 @login_required(login_url='login')
 def updateDepartmentView(request, pk):
@@ -187,6 +196,7 @@ def updateDepartmentView(request, pk):
 
     return render(request, 'timetableapp/Department.html', context)
 
+
 @login_required(login_url='login')
 def deleteDepartment(request, pk):
     deletedepartment = Department.objects.get(user=request.user,department_name=pk)
@@ -196,9 +206,6 @@ def deleteDepartment(request, pk):
         return redirect('department_view')
 
     return render(request, 'timetableapp/deleteDepartment.html', context)
-
-
-
 
 #==================================================================================================
 
@@ -221,11 +228,13 @@ def ProfessorView(request):
             context['message'] = 'Professor ID already exists or you have added wrong attributes.'
     return render(request, 'timetableapp/AddProfessor.html', context)
 
+
 @login_required(login_url='login')
 def ProfessorTable(request):
     professor1 = Professor.objects.filter(user=request.user)
     context = {'professor1': professor1}
     return render(request, 'timetableapp/ProfessorTable.html', context)
+
 
 @login_required(login_url='login')
 def updateProfessorView(request, pk):
@@ -249,6 +258,7 @@ def updateProfessorView(request, pk):
             context['message'] = 'Invalid details.'
 
     return render(request, 'timetableapp/ViewSection.html', context)
+
 
 @login_required(login_url='login')
 def deleteProfessor(request, pk):
@@ -282,6 +292,7 @@ def ClassView(request):
             context['message'] = 'You have entered Wrong Attributes or haven\'t selected the Days'
     return render(request, 'timetableapp/AddClass.html', context)
 
+
 @login_required(login_url='login')
 def ClassTable(request):
     global errors
@@ -290,6 +301,7 @@ def ClassTable(request):
     context.update(errors)
     errors = {}
     return render(request, 'timetableapp/ClassTable.html', context)
+
 
 @login_required(login_url='login')
 def updateClassView(request, pk):
@@ -308,7 +320,7 @@ def updateClassView(request, pk):
         else:
             context['message'] = 'You have entered Wrong Attributes or haven\'t selected the Days'
     return render(request, 'timetableapp/ViewClass.html', context)
-    
+ 
 
 @login_required(login_url='login')
 def deleteClass(request, pk):
@@ -339,11 +351,13 @@ def ClassCourseView(request):
                 context['message'] = 'ERROR'
     return render(request, 'timetableapp/AddClassCourse.html', context)
 
+
 @login_required(login_url='login')
 def ClassCourseTable(request):
     AssignList= ClassCourse.objects.filter(user=request.user)
     context = {'AssignList': AssignList}
     return render(request, 'timetableapp/ClassCourseTable.html', context)
+
 
 @login_required(login_url='login')
 def updateClassCourse(request, pk):
@@ -361,6 +375,7 @@ def updateClassCourse(request, pk):
             except:
                 context['message'] = 'ERROR'
     return render(request, 'timetableapp/AddClassCourse.html', context)
+
 
 @login_required(login_url='login')
 def deleteClassCourse(request, pk):
@@ -652,6 +667,7 @@ def AddActivity(request, pk):
             messages.error(request, 'Error editing activity')
     return render(request, 'timetableapp/AddActivity.html', context)
 
+'''
 def teacherView(request):
     if request.method == 'POST':
         # form = ProfessorForm(request.POST)
@@ -676,3 +692,4 @@ def teacherView(request):
 def professor_logout(request):
     logout(request)
     return redirect('teacher')
+'''
