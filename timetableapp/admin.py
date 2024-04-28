@@ -13,7 +13,7 @@ class ClassCourseDisp(admin.ModelAdmin):
 
 class CourseDisp(admin.ModelAdmin):
     search_fields = ('user','course_id','course_name')
-    list_display = ('course_id','course_name', "course_type", "credit_hours")
+    list_display = ('course_id','course_name', "course_type", "credit_hours", "department")
     # list_editable = ('course_id','course_name')
 
 class ProfessorDisp(admin.ModelAdmin):

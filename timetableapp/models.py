@@ -50,7 +50,7 @@ class Course(models.Model):
         ('Lab', 'Lab')
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     course_id = models.CharField(max_length=1000)
     course_name = models.CharField(max_length=1000)
     course_type = models.CharField(max_length=200, choices=COURSE_TYPE)
