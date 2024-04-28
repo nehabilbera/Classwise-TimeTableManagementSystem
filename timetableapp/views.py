@@ -1,4 +1,3 @@
-
 from random import randint,choice
 
 from django.shortcuts import render, redirect
@@ -571,6 +570,9 @@ def GenerateTimeTable(request, id):
     # messages.success(request, 'Timetable generated')
     return redirect('generate-timetable')
 
+
+
+
 def deleteActivities(usr,id,type=None):
     if type == None:
         activities = list(Activity.objects.filter(user=usr,class_id=id,activity_type='Replaceable'))
@@ -607,6 +609,7 @@ def timeCalculate(usr,id):
             timelist.append( [str(st.time())[0:5] , str(e.time())[0:5]])
             st = e
             breakPosition.append(count)
+            
         s = str(st.time())[0:5]
         st = st + timedelta(minutes=min)
         s = s + ' - ' + str(st.time())[0:5]
@@ -693,3 +696,22 @@ def professor_logout(request):
     logout(request)
     return redirect('teacher')
 '''
+
+
+@login_required(login_url='login')
+def GenerateTimeTableCourse(request, dep_name, b_name, sem):
+    '''
+    Generate timetable from departments.
+    '''
+    
+    department = Department.objects.filter(
+        branch_name=b_name,
+        department_name=dep_name,
+        semester=sem
+    )[0]
+    subjects = Course.objects.filter(department=department)
+
+    print(department)
+    print(subjects)
+    
+    return redirect("department_view")

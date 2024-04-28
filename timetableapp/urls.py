@@ -43,6 +43,7 @@ urlpatterns = [
     path('timetable/<str:id>/', views.TimeTableView, name='timetable'),
     path('activity/<str:pk>/', views.AddActivity, name='add-activity'),
     
+    path('generate-timetable-course/<str:dep_name>/<str:b_name>/<str:sem>/', views.GenerateTimeTableCourse, name='generate-timetable-course'),
 
     
 ############    path('timetable/', views.TimeTable, name='timetable'), #############
