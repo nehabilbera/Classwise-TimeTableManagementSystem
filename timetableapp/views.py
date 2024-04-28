@@ -99,14 +99,14 @@ def CourseView(request):
         else:
             # messages.error(request, 'Course already exists or you have added wrong attributes.')
             context['message'] = 'Course already exists or you have added wrong attributes.'
-    return render(request, 'timetableapp/AddCourse.html', context)
+    return render(request, 'course/AddCourse.html', context)
 
 
 @login_required(login_url='login')
 def CourseTable(request):
     course = Course.objects.filter(user=request.user)
     context = {'course': course}
-    return render(request, 'timetableapp/CourseTable.html', context)
+    return render(request, 'course/CourseTable.html', context)
 
 
 @login_required(login_url='login')
@@ -129,7 +129,7 @@ def updateCourseView(request, pk):
                 context['message']="Course ID already exists"
         else:
             context['message']="Invalid details."
-    return render(request, 'timetableapp/AddCourse.html', context)
+    return render(request, 'course/AddCourse.html', context)
 
 
 @login_required(login_url='login')
@@ -140,7 +140,7 @@ def deleteCourse(request, pk):
         delete_course.delete()
         return redirect('/course_view')
 
-    return render(request, 'timetableapp/delete.html', context)
+    return render(request, 'course/deleteCourse.html', context)
 
 
 #===============================================================================================
