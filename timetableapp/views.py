@@ -337,7 +337,7 @@ def deleteClass(request, pk):
 @login_required(login_url='login')
 def ClassCourseView(request):
     sectioncourse = ClassCourseForm(request.user)
-    sectioncourses = ClassCourse.objects.filter(user=request.user)
+    sectioncourses = ClassCourse.objects.filter()
     context = {'sectioncourse': sectioncourse, 'sectioncourses': sectioncourses}
     if request.method == 'POST':
         sectioncourse = ClassCourseForm(request.user,request.POST)
@@ -354,14 +354,14 @@ def ClassCourseView(request):
 
 @login_required(login_url='login')
 def ClassCourseTable(request):
-    AssignList= ClassCourse.objects.filter(user=request.user)
+    AssignList= ClassCourse.objects.filter()
     context = {'AssignList': AssignList}
     return render(request, 'timetableapp/ClassCourseTable.html', context)
 
 
 @login_required(login_url='login')
 def updateClassCourse(request, pk):
-    assign = ClassCourse.objects.get(user=request.user,id=pk)
+    assign = ClassCourse.objects.get(id=pk)
     sectioncourse = ClassCourseForm(request.user,instance=assign)
     context = {'sectioncourse': sectioncourse}
     if request.method == 'POST':
@@ -379,10 +379,10 @@ def updateClassCourse(request, pk):
 
 @login_required(login_url='login')
 def deleteClassCourse(request, pk):
-    deleteAssign = ClassCourse.objects.get(user=request.user,id=pk)
+    deleteAssign = ClassCourse.objects.get(id=pk)
     context = {'delete': deleteAssign}
     if request.method == 'POST':
-        ClassCourse.objects.filter(user=request.user,id=pk).delete()
+        ClassCourse.objects.filter(id=pk).delete()
         deleteAssign.delete()
         return redirect('view-classcourse')
     return render(request, 'timetableapp/deleteClassCourse.html', context)
