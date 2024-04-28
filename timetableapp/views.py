@@ -104,14 +104,14 @@ def CourseView(request):
 
 @login_required(login_url='login')
 def CourseTable(request):
-    course = Course.objects.filter(user=request.user)
+    course = Course.objects.filter()
     context = {'course': course}
     return render(request, 'course/CourseTable.html', context)
 
 
 @login_required(login_url='login')
 def updateCourseView(request, pk):
-    form = Course.objects.get(user=request.user,course_id=pk)
+    form = Course.objects.get(course_id=pk)
     course = CourseForm(instance=form)
     context = {'course': course}
     if request.method == 'POST':
@@ -121,9 +121,9 @@ def updateCourseView(request, pk):
             if (cors.course_id == pk):
                 cors.save()
                 return redirect('/course_view')
-            elif Course.objects.filter(user=request.user,course_id=form.course_id).count==0:
+            elif Course.objects.filter(course_id=form.course_id).count==0:
                 cors.save()
-                Course.objects.filter(user=request.user,course_id=pk).delete()
+                Course.objects.filter(course_id=pk).delete()
                 return redirect('/course_view')
             else:
                 context['message']="Course ID already exists"
@@ -134,7 +134,7 @@ def updateCourseView(request, pk):
 
 @login_required(login_url='login')
 def deleteCourse(request, pk):
-    delete_course = Course.objects.get(user=request.user,course_id=pk)
+    delete_course = Course.objects.get(course_id=pk)
     context = {'course_delete': delete_course}
     if request.method == 'POST':
         delete_course.delete()
