@@ -24,8 +24,8 @@ urlpatterns = [
     
     path('add-department/', views.DepartmentView, name='add-department'),
     path('deparment_view/', views.DepartmentTable, name='department_view'),
-    path('update-department/<str:pk>/', views.updateDepartmentView, name='update-departmentview'),
-    path('delete-department/<str:pk>/', views.deleteDepartment, name='delete-department'),
+    path('update-department/<str:dep_name>/<str:b_name>/<str:sem>/', views.updateDepartmentView, name='update-departmentview'),
+    path('delete-department/<str:dep_name>/<str:b_name>/<str:sem>/', views.deleteDepartment, name='delete-department'),
     
     path('add-class/', views.ClassView, name='add-class'),
     path('class-view/', views.ClassTable, name='class_view'),

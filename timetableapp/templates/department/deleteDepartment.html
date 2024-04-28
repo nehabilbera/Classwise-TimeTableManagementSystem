@@ -3,9 +3,9 @@
 {% block content %}
 <div class="boxcontainer">
     <div class="deleteBox">
-    <h3 id="deleteText">Do You want to delete "{{ delete.department_name }}"?</h3>
+    <h3 id="deleteText">Do You want to delete "{{delete.branch_name}} ({{delete.department_name}}) - {{delete.semester }}"?</h3>
     <div class="operation">
-        <form method="POST" action="{% url 'delete-department' delete.department_name %}">
+        <form method="POST" action="{% url 'delete-department' dep_name=delete.department_name b_name=delete.branch_name sem=delete.semester %}">
 
     <input class="deleteButton" type="submit" value="Delete">
         {% csrf_token %}

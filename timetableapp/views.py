@@ -148,7 +148,7 @@ def deleteCourse(request, pk):
 @login_required(login_url='login')
 def DepartmentView(request):
     department = DepartmentForm()
-    department1 = Department.objects.filter(user=request.user)
+    department1 = Department.objects.all()
 
     context = {'department': department, 'department1': department1}
     if request.method == 'POST':
@@ -167,26 +167,27 @@ def DepartmentView(request):
 
 @login_required(login_url='login')
 def DepartmentTable(request):
-    department1 = Department.objects.filter(user=request.user)
+    department1 = Department.objects.all()
     context = {'department1': department1}
     return render(request, 'department/DepartmentTable.html', context)
 
 
 @login_required(login_url='login')
-def updateDepartmentView(request, pk):
-    depart = Department.objects.get(user=request.user,department_name=pk)
+def updateDepartmentView(request, dep_name, b_name, sem):
+    depart = Department.objects.get(department_name=dep_name, branch_name=b_name, semester=sem)
     form = DepartmentForm(instance=depart)
+    
     context = {'form': form}
     if request.method == 'POST':
         form = DepartmentForm(request.POST, instance=depart)
         if form.is_valid():
             formsave = form.save(commit=False)
-            if formsave.department_name==pk :
+            if formsave.department_name==dep_name and formsave.branch_name==b_name and formsave.semester==sem:
                 formsave.save()
                 return redirect('/department_view')
-            elif Department.objects.filter(user=request.user,department_name=formsave.department_name).count()==0:
+            elif Department.objects.filter(department_name=formsave.department_name, branch_name=formsave.branch_name, semester=formsave.semester).count()==0:
                 formsave.save()
-                Department.objects.get(user=request.user,department_name=pk).delete()
+                Department.objects.get(department_name=dep_name, branch_name=b_name, semester=sem).delete()
                 return redirect('/department_view')
             else:
                 context['message'] = 'Department  already exists'
@@ -197,8 +198,8 @@ def updateDepartmentView(request, pk):
 
 
 @login_required(login_url='login')
-def deleteDepartment(request, pk):
-    deletedepartment = Department.objects.get(user=request.user,department_name=pk)
+def deleteDepartment(request, dep_name, b_name, sem):
+    deletedepartment = Department.objects.get(department_name=dep_name, branch_name=b_name, semester=sem)
     context = {'delete': deletedepartment}
     if request.method == 'POST':
         deletedepartment.delete()
@@ -702,7 +703,7 @@ def professor_logout(request):
 def ManageTimetable(request): 
     global errors
     sections = Class.objects.filter(user=request.user)
-    department1 = Department.objects.filter(user=request.user)
+    department1 = Department.objects.all()
     
     context = {'sections': sections, 'department1': department1}
     context.update(errors)
