@@ -43,32 +43,6 @@ class Department(models.Model):
         return f"{self.branch_name} ({self.department_name}) - {self.semester}" 
 
 
-
-class Course(models.Model):
-    COURSE_TYPE = (
-        ('Theory', 'Theory'),
-        ('Lab', 'Lab')
-    )
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    course_id = models.CharField(max_length=1000)
-    course_name = models.CharField(max_length=1000)
-    course_type = models.CharField(max_length=200, choices=COURSE_TYPE)
-    credit_hours = models.PositiveIntegerField()
-    contact_hours = models.PositiveIntegerField()
-    class Meta:
-        unique_together = ('user','course_id')
-
-    def __str__(self):
-        return self.course_id + ' - ' + self.course_name
-    
-    def save(self, *args, **kwargs):
-        if self.course_id == '123':
-            raise ValidationError('Cant put 123')
-        return super().save(*args, **kwargs)
-
-    
-
 class Professor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     professor_id = models.CharField(max_length=2000,primary_key=True)
@@ -90,6 +64,31 @@ class Professor(models.Model):
     #             self.birth_date = self.birth_date.strftime('%Y-%m-%d')
     #         except AttributeError:
     #             raise ValidationError('Invalid date format. It must be in YYYY-MM-DD format.')
+
+class Course(models.Model):
+    COURSE_TYPE = (
+        ('Theory', 'Theory'),
+        ('Lab', 'Lab')
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE, blank=True, null=True)
+    course_id = models.CharField(max_length=1000)
+    course_name = models.CharField(max_length=1000)
+    course_type = models.CharField(max_length=200, choices=COURSE_TYPE)
+    credit_hours = models.PositiveIntegerField()
+    contact_hours = models.PositiveIntegerField()
+    class Meta:
+        unique_together = ('user','course_id')
+
+    def __str__(self):
+        return self.course_id + ' - ' + self.course_name
+    
+    def save(self, *args, **kwargs):
+        if self.course_id == '123':
+            raise ValidationError('Cant put 123')
+        return super().save(*args, **kwargs)
+
     
 
 class Class(models.Model):

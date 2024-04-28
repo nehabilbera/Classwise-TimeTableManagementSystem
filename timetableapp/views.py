@@ -104,14 +104,14 @@ def CourseView(request):
 
 @login_required(login_url='login')
 def CourseTable(request):
-    course = Course.objects.filter(user=request.user)
+    course = Course.objects.filter()
     context = {'course': course}
     return render(request, 'course/CourseTable.html', context)
 
 
 @login_required(login_url='login')
 def updateCourseView(request, pk):
-    form = Course.objects.get(user=request.user,course_id=pk)
+    form = Course.objects.get(course_id=pk)
     course = CourseForm(instance=form)
     context = {'course': course}
     if request.method == 'POST':
@@ -121,9 +121,9 @@ def updateCourseView(request, pk):
             if (cors.course_id == pk):
                 cors.save()
                 return redirect('/course_view')
-            elif Course.objects.filter(user=request.user,course_id=form.course_id).count==0:
+            elif Course.objects.filter(course_id=form.course_id).count==0:
                 cors.save()
-                Course.objects.filter(user=request.user,course_id=pk).delete()
+                Course.objects.filter(course_id=pk).delete()
                 return redirect('/course_view')
             else:
                 context['message']="Course ID already exists"
@@ -134,7 +134,7 @@ def updateCourseView(request, pk):
 
 @login_required(login_url='login')
 def deleteCourse(request, pk):
-    delete_course = Course.objects.get(user=request.user,course_id=pk)
+    delete_course = Course.objects.get(course_id=pk)
     context = {'course_delete': delete_course}
     if request.method == 'POST':
         delete_course.delete()
@@ -212,7 +212,7 @@ def deleteDepartment(request, dep_name, b_name, sem):
 @login_required(login_url='login')
 def ProfessorView(request):
     professor = ProfessorForm()
-    professor1 = Professor.objects.filter(user=request.user)
+    professor1 = Professor.objects.filter()
 
     context = {'professor': professor, 'professor1': professor1}
     if request.method == 'POST':
@@ -231,14 +231,14 @@ def ProfessorView(request):
 
 @login_required(login_url='login')
 def ProfessorTable(request):
-    professor1 = Professor.objects.filter(user=request.user)
+    professor1 = Professor.objects.filter()
     context = {'professor1': professor1}
     return render(request, 'professor/ProfessorTable.html', context)
 
 
 @login_required(login_url='login')
 def updateProfessorView(request, pk):
-    prof = Professor.objects.get(user=request.user,professor_id=pk)
+    prof = Professor.objects.get(professor_id=pk)
     form = ProfessorForm(instance=prof)
     context = {'form': form}
     if request.method == 'POST':
@@ -248,9 +248,9 @@ def updateProfessorView(request, pk):
             if formsave.professor_id==pk :
                 formsave.save()
                 return redirect('professor_view')
-            elif Professor.objects.filter(user=request.user,professor_id=formsave.professor_id).count()==0:
+            elif Professor.objects.filter(professor_id=formsave.professor_id).count()==0:
                 formsave.save()
-                Professor.objects.get(user=request.user,professor_id=pk).delete()
+                Professor.objects.get(professor_id=pk).delete()
                 return redirect('professor_view')
             else:
                 context['message'] = 'Professor ID already exists'
@@ -262,7 +262,7 @@ def updateProfessorView(request, pk):
 
 @login_required(login_url='login')
 def deleteProfessor(request, pk):
-    deleteprofessor = Professor.objects.get(user=request.user,professor_id=pk)
+    deleteprofessor = Professor.objects.get(professor_id=pk)
     context = {'delete': deleteprofessor}
     if request.method == 'POST':
         deleteprofessor.delete()
@@ -274,7 +274,7 @@ def deleteProfessor(request, pk):
 @login_required(login_url='login')
 def ClassView(request):
     section = ClassForm()
-    sections = Class.objects.filter(user=request.user)
+    sections = Class.objects.filter()
     context = {'section': section, 'sections': sections}
     if request.method == 'POST':
         section = ClassForm(request.POST)
@@ -296,7 +296,7 @@ def ClassView(request):
 @login_required(login_url='login')
 def ClassTable(request):
     global errors
-    sections = Class.objects.filter(user=request.user)
+    sections = Class.objects.filter()
     context = {'sections': sections}
     context.update(errors)
     errors = {}
@@ -305,7 +305,7 @@ def ClassTable(request):
 
 @login_required(login_url='login')
 def updateClassView(request, pk):
-    section = Class.objects.get(user=request.user,class_id=pk)
+    section = Class.objects.get(class_id=pk)
     form = ClassForm(instance=section)
     context = {'form': form}
     if request.method == 'POST':
@@ -324,11 +324,11 @@ def updateClassView(request, pk):
 
 @login_required(login_url='login')
 def deleteClass(request, pk):
-    deleteClass = Class.objects.get(user=request.user,class_id=pk)
+    deleteClass = Class.objects.get(class_id=pk)
     context = {'delete': deleteClass}
     if request.method == 'POST':
         deleteActivities(request.user,pk)
-        ClassCourse.objects.filter(user=request.user,class_id=deleteClass).delete()
+        ClassCourse.objects.filter(class_id=deleteClass).delete()
         deleteClass.delete()
         return redirect('class_view')
     return render(request, 'timetableapp/deleteClass.html', context)
@@ -337,7 +337,7 @@ def deleteClass(request, pk):
 @login_required(login_url='login')
 def ClassCourseView(request):
     sectioncourse = ClassCourseForm(request.user)
-    sectioncourses = ClassCourse.objects.filter(user=request.user)
+    sectioncourses = ClassCourse.objects.filter()
     context = {'sectioncourse': sectioncourse, 'sectioncourses': sectioncourses}
     if request.method == 'POST':
         sectioncourse = ClassCourseForm(request.user,request.POST)
@@ -354,14 +354,14 @@ def ClassCourseView(request):
 
 @login_required(login_url='login')
 def ClassCourseTable(request):
-    AssignList= ClassCourse.objects.filter(user=request.user)
+    AssignList= ClassCourse.objects.filter()
     context = {'AssignList': AssignList}
     return render(request, 'timetableapp/ClassCourseTable.html', context)
 
 
 @login_required(login_url='login')
 def updateClassCourse(request, pk):
-    assign = ClassCourse.objects.get(user=request.user,id=pk)
+    assign = ClassCourse.objects.get(id=pk)
     sectioncourse = ClassCourseForm(request.user,instance=assign)
     context = {'sectioncourse': sectioncourse}
     if request.method == 'POST':
@@ -379,10 +379,10 @@ def updateClassCourse(request, pk):
 
 @login_required(login_url='login')
 def deleteClassCourse(request, pk):
-    deleteAssign = ClassCourse.objects.get(user=request.user,id=pk)
+    deleteAssign = ClassCourse.objects.get(id=pk)
     context = {'delete': deleteAssign}
     if request.method == 'POST':
-        ClassCourse.objects.filter(user=request.user,id=pk).delete()
+        ClassCourse.objects.filter(id=pk).delete()
         deleteAssign.delete()
         return redirect('view-classcourse')
     return render(request, 'timetableapp/deleteClassCourse.html', context)
