@@ -212,7 +212,7 @@ def deleteDepartment(request, dep_name, b_name, sem):
 @login_required(login_url='login')
 def ProfessorView(request):
     professor = ProfessorForm()
-    professor1 = Professor.objects.filter(user=request.user)
+    professor1 = Professor.objects.filter()
 
     context = {'professor': professor, 'professor1': professor1}
     if request.method == 'POST':
@@ -231,14 +231,14 @@ def ProfessorView(request):
 
 @login_required(login_url='login')
 def ProfessorTable(request):
-    professor1 = Professor.objects.filter(user=request.user)
+    professor1 = Professor.objects.filter()
     context = {'professor1': professor1}
     return render(request, 'professor/ProfessorTable.html', context)
 
 
 @login_required(login_url='login')
 def updateProfessorView(request, pk):
-    prof = Professor.objects.get(user=request.user,professor_id=pk)
+    prof = Professor.objects.get(professor_id=pk)
     form = ProfessorForm(instance=prof)
     context = {'form': form}
     if request.method == 'POST':
@@ -248,9 +248,9 @@ def updateProfessorView(request, pk):
             if formsave.professor_id==pk :
                 formsave.save()
                 return redirect('professor_view')
-            elif Professor.objects.filter(user=request.user,professor_id=formsave.professor_id).count()==0:
+            elif Professor.objects.filter(professor_id=formsave.professor_id).count()==0:
                 formsave.save()
-                Professor.objects.get(user=request.user,professor_id=pk).delete()
+                Professor.objects.get(professor_id=pk).delete()
                 return redirect('professor_view')
             else:
                 context['message'] = 'Professor ID already exists'
@@ -262,7 +262,7 @@ def updateProfessorView(request, pk):
 
 @login_required(login_url='login')
 def deleteProfessor(request, pk):
-    deleteprofessor = Professor.objects.get(user=request.user,professor_id=pk)
+    deleteprofessor = Professor.objects.get(professor_id=pk)
     context = {'delete': deleteprofessor}
     if request.method == 'POST':
         deleteprofessor.delete()
