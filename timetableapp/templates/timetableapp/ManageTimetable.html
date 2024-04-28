@@ -1,0 +1,107 @@
+{% extends 'timetableapp/main.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="viewcontainer">
+  <div class="container-fluid">
+
+    <div class="search">
+      <input type="text" class="searchbox" placeholder="Search...">
+      <input type="submit" value="Search" class="searchButton">
+      <a href="{% url 'add-class' %}"><button class="searchButton">Add Class </button></a>
+    </div>
+
+
+    <table class="table text-center">
+      <thead class="table-header" style="color: white;">
+        <tr>
+          <div class="header__item filter__link" >
+            <th scope="col" class="text-center">Class ID</th>
+          </div>
+
+          <div class="header__item filter__link">
+            <th class="text-center" scope="col">Class Name</th>
+          </div>
+
+          <div class="header__item filter__link">
+            <th class="text-center" scope="col">Class Strength</th>
+          </div>
+
+          <div class="header__item filter__link">
+            <th class="text-center" scope="col">Generate Timetable</th>
+          </div>
+
+          <div class="header__item filter__link">
+            <th class="text-center" scope="col">View Timetable</th>
+          </div>
+        </tr>	
+      </thead>
+      <tbody class="tab-content">
+        {% for section in sections %}
+          <tr class="table-row text-center">
+            <th scope="row" class="table-data">{{ section.class_id }}</th>             
+            <th scope="row" class="table-data"  >{{ section.class_name }}</th>
+            <th scope="row" class="table-data">{{ section.class_strength }}</th>
+
+            <th scope="row" class="table-data"> <a href="{% url 'generate-timetable' section.class_id %}" class="btn btn-sm btn-danger" >Generate Timetable</a></th>
+              
+            <th scope="row" class="table-data"> <a href="{% url 'timetable' section.class_id %}" class="btn btn-sm btn-danger" >View Timetable</a></th>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+    <table class="table text-center">
+      <thead class="table-header" style="color: white;">
+        <tr>
+          <div class="header__item filter__link" >
+            <th scope="col" class="text-center">Department name</th>
+          </div>
+
+          <div class="header__item filter__link" >
+            <th scope="col" class="text-center">Branch name</th>
+          </div> 
+
+          <div class="header__item filter__link">
+            <th class="text-center" scope="col">Semester</th>
+          </div>
+          
+          <div class="header__item filter__link">
+            <th class="text-center" scope="col">Strength</th>
+          </div>
+
+          <div class="header__item filter__link">
+            <th class="text-center" scope="col">Generate Timetable</th>
+          </div>
+
+          <div class="header__item filter__link">
+            <th class="text-center" scope="col">View Timetable</th>
+          </div>
+        </tr>	
+      </thead>
+
+        
+      <tbody class="tab-content">
+        {% for department in department1 %}
+          <tr class="table-row text-center">
+            <th scope="row" class="table-data">{{ department.department_name }}</th>
+                          
+            <th scope="row" class="table-data"  >{{ department.branch_name }}</th>
+            <th scope="row" class="table-data">{{ department.semester}}</th>
+            <th scope="row" class="table-data">{{ department.students_length }}</th>
+
+            <th scope="row" class="table-data"> <a href="{% url 'generate-timetable-course' dep_name=department.department_name b_name=department.branch_name sem=department.semester %}" class="btn btn-sm btn-danger" >Generate Timetable</a></th> 
+            
+            <th scope="row" class="table-data"> <a href="" class="btn btn-sm btn-danger" >View Timetable</a></th>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+
+{% endblock %}

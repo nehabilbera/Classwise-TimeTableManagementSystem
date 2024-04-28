@@ -1,4 +1,3 @@
-
 from random import randint,choice
 
 from django.shortcuts import render, redirect
@@ -100,14 +99,14 @@ def CourseView(request):
         else:
             # messages.error(request, 'Course already exists or you have added wrong attributes.')
             context['message'] = 'Course already exists or you have added wrong attributes.'
-    return render(request, 'timetableapp/AddCourse.html', context)
+    return render(request, 'course/AddCourse.html', context)
 
 
 @login_required(login_url='login')
 def CourseTable(request):
     course = Course.objects.filter(user=request.user)
     context = {'course': course}
-    return render(request, 'timetableapp/CourseTable.html', context)
+    return render(request, 'course/CourseTable.html', context)
 
 
 @login_required(login_url='login')
@@ -130,7 +129,7 @@ def updateCourseView(request, pk):
                 context['message']="Course ID already exists"
         else:
             context['message']="Invalid details."
-    return render(request, 'timetableapp/AddCourse.html', context)
+    return render(request, 'course/AddCourse.html', context)
 
 
 @login_required(login_url='login')
@@ -141,7 +140,7 @@ def deleteCourse(request, pk):
         delete_course.delete()
         return redirect('/course_view')
 
-    return render(request, 'timetableapp/delete.html', context)
+    return render(request, 'course/deleteCourse.html', context)
 
 
 #===============================================================================================
@@ -163,14 +162,14 @@ def DepartmentView(request):
         else:
             # messages.error(request, 'Professor already exists or you have added wrong attributes.')
             context['message'] = 'department ID already exists or you have added wrong attributes.'
-    return render(request, 'timetableapp/Department.html', context)
+    return render(request, 'department/Department.html', context)
 
 
 @login_required(login_url='login')
 def DepartmentTable(request):
     department1 = Department.objects.filter(user=request.user)
     context = {'department1': department1}
-    return render(request, 'timetableapp/DepartmentTable.html', context)
+    return render(request, 'department/DepartmentTable.html', context)
 
 
 @login_required(login_url='login')
@@ -194,7 +193,7 @@ def updateDepartmentView(request, pk):
         else:
             context['message'] = 'Invalid details.'
 
-    return render(request, 'timetableapp/Department.html', context)
+    return render(request, 'department/Department.html', context)
 
 
 @login_required(login_url='login')
@@ -205,7 +204,7 @@ def deleteDepartment(request, pk):
         deletedepartment.delete()
         return redirect('department_view')
 
-    return render(request, 'timetableapp/deleteDepartment.html', context)
+    return render(request, 'department/deleteDepartment.html', context)
 
 #==================================================================================================
 
@@ -226,14 +225,14 @@ def ProfessorView(request):
         else:
             # messages.error(request, 'Professor already exists or you have added wrong attributes.')
             context['message'] = 'Professor ID already exists or you have added wrong attributes.'
-    return render(request, 'timetableapp/AddProfessor.html', context)
+    return render(request, 'professor/AddProfessor.html', context)
 
 
 @login_required(login_url='login')
 def ProfessorTable(request):
     professor1 = Professor.objects.filter(user=request.user)
     context = {'professor1': professor1}
-    return render(request, 'timetableapp/ProfessorTable.html', context)
+    return render(request, 'professor/ProfessorTable.html', context)
 
 
 @login_required(login_url='login')
@@ -268,7 +267,7 @@ def deleteProfessor(request, pk):
         deleteprofessor.delete()
         return redirect('/professor_view')
 
-    return render(request, 'timetableapp/deleteProfessor.html', context)
+    return render(request, 'professor/deleteProfessor.html', context)
 
 
 @login_required(login_url='login')
@@ -571,6 +570,9 @@ def GenerateTimeTable(request, id):
     # messages.success(request, 'Timetable generated')
     return redirect('generate-timetable')
 
+
+
+
 def deleteActivities(usr,id,type=None):
     if type == None:
         activities = list(Activity.objects.filter(user=usr,class_id=id,activity_type='Replaceable'))
@@ -607,6 +609,7 @@ def timeCalculate(usr,id):
             timelist.append( [str(st.time())[0:5] , str(e.time())[0:5]])
             st = e
             breakPosition.append(count)
+            
         s = str(st.time())[0:5]
         st = st + timedelta(minutes=min)
         s = s + ' - ' + str(st.time())[0:5]
@@ -693,3 +696,33 @@ def professor_logout(request):
     logout(request)
     return redirect('teacher')
 '''
+
+
+@login_required(login_url='login')
+def ManageTimetable(request): 
+    global errors
+    sections = Class.objects.filter(user=request.user)
+    department1 = Department.objects.filter(user=request.user)
+    
+    context = {'sections': sections, 'department1': department1}
+    context.update(errors)
+    return render(request, 'timetableapp/ManageTimetable.html', context)
+
+
+@login_required(login_url='login')
+def GenerateTimeTableCourse(request, dep_name, b_name, sem):
+    '''
+    Generate timetable from departments.
+    '''
+    
+    department = Department.objects.filter(
+        branch_name=b_name,
+        department_name=dep_name,
+        semester=sem
+    )[0]
+    subjects = Course.objects.filter(department=department)
+
+    print(department)
+    print(subjects)
+    
+    return redirect("department_view")

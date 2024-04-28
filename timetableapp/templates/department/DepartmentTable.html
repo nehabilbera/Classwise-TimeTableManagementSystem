@@ -68,7 +68,7 @@
                    
                         <th scope="row" class="table-data"> <a href="{% url 'delete-department' department.department_name %}" class="btn btn-sm btn-danger" >Remove</a></th>
 
-                        <th scope="row" class="table-data"> <a href="" class="btn btn-sm btn-danger" >Generate Timetable</a></th>
+                        <th scope="row" class="table-data"> <a href="{% url 'generate-timetable-course' dep_name=department.department_name b_name=department.branch_name sem=department.semester %}" class="btn btn-sm btn-danger" >Generate Timetable</a></th> 
                 
                         <th scope="row" class="table-data"> <a href="" class="btn btn-sm btn-danger" >View Timetable</a></th>
 					</tr>
