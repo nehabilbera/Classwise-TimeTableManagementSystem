@@ -94,17 +94,21 @@ class Department(models.Model):
     ('VII' ,'VII'),
     ('VIII' ,'VIII'),
     )
+    BRANCH_NAME = (
+    ('B.Tech' ,'B.Tech'),
+    ('MCA' ,'MCA'),
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     department_name=models.CharField(max_length=200)
-    branch_name=models.CharField(max_length=200)
-    semester=MultiSelectField(max_length=2000, choices=SEMESTER, max_choices=1)
+    branch_name=models.CharField(max_length=200, choices=BRANCH_NAME)
+    semester = models.CharField(max_length=200, choices=SEMESTER)
     students_length=models.IntegerField(default=100)
 
     class Meta:
         unique_together = ('user','department_name','branch_name','semester','students_length')
 
     def __str__(self):
-        return self.department + ' - ' + self.branch_name + '-' + self.semster + '-' +self.students_length
+        return f"{self.branch_name} ({self.department_name}) - {self.semester} : {self.students_length}" 
 
 
 
