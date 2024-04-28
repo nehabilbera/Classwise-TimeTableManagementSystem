@@ -274,7 +274,7 @@ def deleteProfessor(request, pk):
 @login_required(login_url='login')
 def ClassView(request):
     section = ClassForm()
-    sections = Class.objects.filter(user=request.user)
+    sections = Class.objects.filter()
     context = {'section': section, 'sections': sections}
     if request.method == 'POST':
         section = ClassForm(request.POST)
@@ -296,7 +296,7 @@ def ClassView(request):
 @login_required(login_url='login')
 def ClassTable(request):
     global errors
-    sections = Class.objects.filter(user=request.user)
+    sections = Class.objects.filter()
     context = {'sections': sections}
     context.update(errors)
     errors = {}
@@ -305,7 +305,7 @@ def ClassTable(request):
 
 @login_required(login_url='login')
 def updateClassView(request, pk):
-    section = Class.objects.get(user=request.user,class_id=pk)
+    section = Class.objects.get(class_id=pk)
     form = ClassForm(instance=section)
     context = {'form': form}
     if request.method == 'POST':
@@ -324,11 +324,11 @@ def updateClassView(request, pk):
 
 @login_required(login_url='login')
 def deleteClass(request, pk):
-    deleteClass = Class.objects.get(user=request.user,class_id=pk)
+    deleteClass = Class.objects.get(class_id=pk)
     context = {'delete': deleteClass}
     if request.method == 'POST':
         deleteActivities(request.user,pk)
-        ClassCourse.objects.filter(user=request.user,class_id=deleteClass).delete()
+        ClassCourse.objects.filter(class_id=deleteClass).delete()
         deleteClass.delete()
         return redirect('class_view')
     return render(request, 'timetableapp/deleteClass.html', context)
