@@ -98,9 +98,15 @@ class Department(models.Model):
     ('B.Tech' ,'B.Tech'),
     ('MCA' ,'MCA'),
     )
+    DEPARTMENT_NAME = (
+    ('MCA' ,'MCA'),
+    ('CSE' ,'CSE'),
+    ('ECE' ,'ECE'),
+    ('CHE' ,'CHE'),
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    department_name=models.CharField(max_length=200)
     branch_name=models.CharField(max_length=200, choices=BRANCH_NAME)
+    department_name=models.CharField(max_length=200, choices=DEPARTMENT_NAME)
     semester = models.CharField(max_length=200, choices=SEMESTER)
     students_length=models.IntegerField(default=100)
 

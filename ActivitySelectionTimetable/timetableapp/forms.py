@@ -68,7 +68,10 @@ class DepartmentForm(ModelForm):
         model= Department
         field=['user','department_name','branch_name','semester','students_length']
         exclude=['user']
-        labels={}
+        labels={
+            'branch_name': 'Course',
+            'department_name': 'Department'
+        }
         widgets = {
             
             
