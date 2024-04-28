@@ -8,12 +8,49 @@ from datetime import time
 import datetime
 
 
+
+class Department(models.Model):
+    SEMESTER = (
+    ('I' ,'I'),
+    ('II' ,'II'),
+    ('III' ,'III'),
+    ('IV' ,'IV'),
+    ('V' ,'V'),
+    ('VI' ,'VI'),
+    ('VII' ,'VII'),
+    ('VIII' ,'VIII'),
+    )
+    BRANCH_NAME = (
+    ('B.Tech' ,'B.Tech'),
+    ('MCA' ,'MCA'),
+    )
+    DEPARTMENT_NAME = (
+    ('MCA' ,'MCA'),
+    ('CSE' ,'CSE'),
+    ('ECE' ,'ECE'),
+    ('CHE' ,'CHE'),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)    
+    branch_name=models.CharField(max_length=200, choices=BRANCH_NAME)
+    department_name=models.CharField(max_length=200, choices=DEPARTMENT_NAME)
+    semester = models.CharField(max_length=200, choices=SEMESTER)
+    students_length=models.IntegerField(default=100)
+
+    class Meta:
+        unique_together = ('department_name','branch_name','semester')
+
+    def __str__(self):
+        return f"{self.branch_name} ({self.department_name}) - {self.semester} : {self.students_length}" 
+
+
+
 class Course(models.Model):
     COURSE_TYPE = (
         ('Theory', 'Theory'),
         ('Lab', 'Lab')
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
     course_id = models.CharField(max_length=1000)
     course_name = models.CharField(max_length=1000)
     course_type = models.CharField(max_length=200, choices=COURSE_TYPE)
@@ -56,8 +93,6 @@ class Professor(models.Model):
     
 
 class Class(models.Model):
-    
-
     WEEK_DAY = (
     ('Monday', 'Monday'),
     ('Tuesday', 'Tuesday'),
@@ -66,6 +101,7 @@ class Class(models.Model):
     ('Friday', 'Friday'),
     ('Saturday', 'Saturday')
     )
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     class_id = models.CharField(max_length=2000)
     class_name = models.CharField(max_length=2000)
@@ -84,41 +120,7 @@ class Class(models.Model):
 
     def __str__(self):
         return self.class_id + ' - ' + self.class_name
-
-class Department(models.Model):
-    SEMESTER = (
-    ('I' ,'I'),
-    ('II' ,'II'),
-    ('III' ,'III'),
-    ('IV' ,'IV'),
-    ('V' ,'V'),
-    ('VI' ,'VI'),
-    ('VII' ,'VII'),
-    ('VIII' ,'VIII'),
-    )
-    BRANCH_NAME = (
-    ('B.Tech' ,'B.Tech'),
-    ('MCA' ,'MCA'),
-    )
-    DEPARTMENT_NAME = (
-    ('MCA' ,'MCA'),
-    ('CSE' ,'CSE'),
-    ('ECE' ,'ECE'),
-    ('CHE' ,'CHE'),
-    )
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)    
-    branch_name=models.CharField(max_length=200, choices=BRANCH_NAME)
-    department_name=models.CharField(max_length=200, choices=DEPARTMENT_NAME)
-    semester = models.CharField(max_length=200, choices=SEMESTER)
-    students_length=models.IntegerField(default=100)
-
-    class Meta:
-        unique_together = ('department_name','branch_name','semester')
-
-    def __str__(self):
-        return f"{self.branch_name} ({self.department_name}) - {self.semester} : {self.students_length}" 
-
-
+    
 
 
 # table to store courses for class
