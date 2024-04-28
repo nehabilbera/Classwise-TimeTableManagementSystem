@@ -106,14 +106,14 @@ class Department(models.Model):
     ('ECE' ,'ECE'),
     ('CHE' ,'CHE'),
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)    
     branch_name=models.CharField(max_length=200, choices=BRANCH_NAME)
     department_name=models.CharField(max_length=200, choices=DEPARTMENT_NAME)
     semester = models.CharField(max_length=200, choices=SEMESTER)
     students_length=models.IntegerField(default=100)
 
     class Meta:
-        unique_together = ('user','department_name','branch_name','semester','students_length')
+        unique_together = ('department_name','branch_name','semester')
 
     def __str__(self):
         return f"{self.branch_name} ({self.department_name}) - {self.semester} : {self.students_length}" 

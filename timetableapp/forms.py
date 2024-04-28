@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.forms import ModelForm, TimeInput, MultipleChoiceField
+from django.forms import DateInput, ModelForm, TimeInput, MultipleChoiceField
 from .models import *
 
 
@@ -25,13 +25,19 @@ class CourseForm(ModelForm):
                   'contact_hours':'Total hours per week'}
 
 
+class DateIn(DateInput):
+    input_type = "date"
+
 class ProfessorForm(ModelForm):
     
     class Meta:
         model = Professor
         fields = ['user','professor_id', 'professor_name','dob','professor_email', 'working_hours','available_hours']
         exclude = ['user']
-        labels = {'dob':'DOB(YYYY-MM-DD)'}
+        labels = {'dob':'DOB (DD-MM-YYYY)'}
+        widgets = {
+            "dob": DateIn()
+        }
 
 class TimeIn(TimeInput):
     input_type = "time"
@@ -76,15 +82,7 @@ class DepartmentForm(ModelForm):
             
             
         }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
 class ClassCourseForm(ModelForm):
     class Meta:
