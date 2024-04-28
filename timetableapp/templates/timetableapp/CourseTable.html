@@ -20,6 +20,9 @@
                    <th scope="col" class="text-center" >Subject ID</th>
                 </div>
                 <div class="header__item filter__link" >
+                    <th class="text-center" scope="col" >Course</th>
+                 </div>
+                <div class="header__item filter__link" >
                   <th class="text-center" scope="col" >Subject Name</th>
                 </div>
                 <div class="header__item filter__link" >
@@ -43,6 +46,8 @@
                 {% for corse in course %}
 				<tr class="table-row text-center">
                         <th scope="row" class="table-data">{{ corse.course_id }}</th>
+                        
+                        <th scope="row" class="table-data">{{ corse.department }}</th>
                     					
 						<th scope="row" class="table-data"  >{{ corse.course_name }}</th>
                        

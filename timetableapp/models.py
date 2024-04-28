@@ -40,7 +40,7 @@ class Department(models.Model):
         unique_together = ('department_name','branch_name','semester')
 
     def __str__(self):
-        return f"{self.branch_name} ({self.department_name}) - {self.semester} : {self.students_length}" 
+        return f"{self.branch_name} ({self.department_name}) - {self.semester}" 
 
 
 

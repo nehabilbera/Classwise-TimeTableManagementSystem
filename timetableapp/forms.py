@@ -19,9 +19,9 @@ class CreateUserForm(UserCreationForm):
 class CourseForm(ModelForm):
     class Meta:
         model = Course
-        fields = ['user','course_id', 'course_name', 'course_type', 'credit_hours', 'contact_hours']
+        fields = ['user','course_id', 'course_name', 'course_type', "department", 'credit_hours', 'contact_hours']
         exclude = ['user']
-        labels = {'course_id':'Subject id','course_name':'Subject name','course_type':'Subject type','credit_hours':'No of classes per week',
+        labels = {'course_id':'Subject id','course_name':'Subject name','course_type':'Subject type',"department":"Course",'credit_hours':'No of classes per week',
                   'contact_hours':'Total hours per week'}
 
 
