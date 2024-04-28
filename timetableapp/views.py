@@ -699,6 +699,17 @@ def professor_logout(request):
 
 
 @login_required(login_url='login')
+def ManageTimetable(request): 
+    global errors
+    sections = Class.objects.filter(user=request.user)
+    department1 = Department.objects.filter(user=request.user)
+    
+    context = {'sections': sections, 'department1': department1}
+    context.update(errors)
+    return render(request, 'timetableapp/ManageTimetable.html', context)
+
+
+@login_required(login_url='login')
 def GenerateTimeTableCourse(request, dep_name, b_name, sem):
     '''
     Generate timetable from departments.
