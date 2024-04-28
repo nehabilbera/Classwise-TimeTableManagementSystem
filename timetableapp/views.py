@@ -162,14 +162,14 @@ def DepartmentView(request):
         else:
             # messages.error(request, 'Professor already exists or you have added wrong attributes.')
             context['message'] = 'department ID already exists or you have added wrong attributes.'
-    return render(request, 'timetableapp/Department.html', context)
+    return render(request, 'department/Department.html', context)
 
 
 @login_required(login_url='login')
 def DepartmentTable(request):
     department1 = Department.objects.filter(user=request.user)
     context = {'department1': department1}
-    return render(request, 'timetableapp/DepartmentTable.html', context)
+    return render(request, 'department/DepartmentTable.html', context)
 
 
 @login_required(login_url='login')
@@ -193,7 +193,7 @@ def updateDepartmentView(request, pk):
         else:
             context['message'] = 'Invalid details.'
 
-    return render(request, 'timetableapp/Department.html', context)
+    return render(request, 'department/Department.html', context)
 
 
 @login_required(login_url='login')
@@ -204,7 +204,7 @@ def deleteDepartment(request, pk):
         deletedepartment.delete()
         return redirect('department_view')
 
-    return render(request, 'timetableapp/deleteDepartment.html', context)
+    return render(request, 'department/deleteDepartment.html', context)
 
 #==================================================================================================
 
