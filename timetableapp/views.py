@@ -225,14 +225,14 @@ def ProfessorView(request):
         else:
             # messages.error(request, 'Professor already exists or you have added wrong attributes.')
             context['message'] = 'Professor ID already exists or you have added wrong attributes.'
-    return render(request, 'timetableapp/AddProfessor.html', context)
+    return render(request, 'professor/AddProfessor.html', context)
 
 
 @login_required(login_url='login')
 def ProfessorTable(request):
     professor1 = Professor.objects.filter(user=request.user)
     context = {'professor1': professor1}
-    return render(request, 'timetableapp/ProfessorTable.html', context)
+    return render(request, 'professor/ProfessorTable.html', context)
 
 
 @login_required(login_url='login')
@@ -267,7 +267,7 @@ def deleteProfessor(request, pk):
         deleteprofessor.delete()
         return redirect('/professor_view')
 
-    return render(request, 'timetableapp/deleteProfessor.html', context)
+    return render(request, 'professor/deleteProfessor.html', context)
 
 
 @login_required(login_url='login')
