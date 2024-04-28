@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from datetime import time
 import datetime
+
+
 class Course(models.Model):
     COURSE_TYPE = (
         ('Theory', 'Theory'),
@@ -71,11 +73,11 @@ class Class(models.Model):
     week_day = MultiSelectField(max_length=2000, choices=WEEK_DAY, max_choices=6)
     no_sessions = models.PositiveIntegerField(default = 8)
     class_mins = models.PositiveIntegerField(default = 60)
-    start_time = models.TimeField(default=time(00,00))
-    end_time = models.TimeField(default=time(00,00))
-    break_start = models.TimeField(null=True,blank=True)
+    start_time = models.TimeField(default=time(8,00))
+    end_time = models.TimeField(default=time(18,00))
     
-    break_end = models.TimeField(null=True,blank=True)
+    break_start = models.TimeField(null=True,blank=True, default=time(12,00))
+    break_end = models.TimeField(null=True,blank=True, default=time(13,00))
     
     class Meta:
         unique_together = ('user','class_id')
