@@ -194,7 +194,7 @@ def updateDepartmentView(request, dep_name, b_name, sem):
         else:
             context['message'] = 'Invalid details.'
 
-    return render(request, 'department/Department.html', context)
+    return render(request, 'timetableapp/ViewDepartment.html', context)
 
 
 @login_required(login_url='login')
