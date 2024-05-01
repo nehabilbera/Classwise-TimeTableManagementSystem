@@ -19,37 +19,25 @@
 			<tr>
                 <div class="header__item filter__link" >
                    <th scope="col" class="text-center">Department name</th>
-
                 </div>
+
                 <div class="header__item filter__link" >
                     <th scope="col" class="text-center">Branch name</th>
+                </div> 
  
-                 </div> 
                 <div class="header__item filter__link">
                   <th class="text-center" scope="col">Semester</th>
-
                 </div>
 
                 <div class="header__item filter__link">
                     <th class="text-center" scope="col">Strength</th>
-  
-                  </div>
+                </div>
 
                 <div class="header__item filter__link">
                     <th class="text-center" scope="col"> Update</th>
-
                 </div>
                 <div class="header__item filter__link">
                      <th class="text-center" scope="col">Delete</th>
-
-                </div>
-                <div class="header__item filter__link">
-                    <th class="text-center" scope="col">Generate Timetable</th>
-
-                </div>
-                <div class="header__item filter__link">
-                    <th class="text-center" scope="col">View Timetable</th>
-
                 </div>
 			</tr>	
             </thead>
@@ -58,8 +46,7 @@
 			<tbody class="tab-content">
                 {% for department in department1 %}
 				    <tr class="table-row text-center">
-                        <th scope="row" class="table-data">{{ department.department_name }}</th>
-                    					
+                        <th scope="row" class="table-data">{{ department.department_name }}</th>				
 						<th scope="row" class="table-data"  >{{ department.branch_name }}</th>
                         <th scope="row" class="table-data">{{ department.semester}}</th>
                         <th scope="row" class="table-data">{{ department.students_length }}</th>
@@ -67,10 +54,6 @@
                         <th scope="row" class="table-data"> <a href="{% url 'update-departmentview' dep_name=department.department_name b_name=department.branch_name sem=department.semester %}" class="btn btn-sm btn-info">Update</a></th>
                    
                         <th scope="row" class="table-data"> <a href="{% url 'delete-department' dep_name=department.department_name b_name=department.branch_name sem=department.semester %}" class="btn btn-sm btn-danger" >Remove</a></th>
-
-                        <th scope="row" class="table-data"> <a href="{% url 'generate-timetable-course' dep_name=department.department_name b_name=department.branch_name sem=department.semester %}" class="btn btn-sm btn-danger" >Generate Timetable</a></th> 
-                
-                        <th scope="row" class="table-data"> <a href="" class="btn btn-sm btn-danger" >View Timetable</a></th>
 					</tr>
                 {% endfor %}
             </tbody>

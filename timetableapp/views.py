@@ -690,7 +690,7 @@ def professor_logout(request):
 @login_required(login_url='login')
 def ManageTimetable(request): 
     global errors
-    sections = Class.objects.filter()
+    sections = Class.objects.filter()[0:2]
     department1 = Department.objects.all()
     
     context = {'sections': sections, 'department1': department1}

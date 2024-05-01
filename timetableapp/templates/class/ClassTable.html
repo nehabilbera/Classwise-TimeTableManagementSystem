@@ -42,14 +42,6 @@
                      <th class="text-center" scope="col">Delete</th>
 
                 </div>
-                <div class="header__item filter__link">
-                    <th class="text-center" scope="col">Generate Timetable</th>
-
-                </div>
-                <div class="header__item filter__link">
-                    <th class="text-center" scope="col">View Timetable</th>
-
-                </div>
 			</tr>	
             </thead>
 			
@@ -57,19 +49,12 @@
 			<tbody class="tab-content">
                 {% for section in sections %}
 				    <tr class="table-row text-center">
-                        <th scope="row" class="table-data">{{ section.class_id }}</th>
-                    					
+                        <th scope="row" class="table-data">{{ section.class_id }}</th>			
 						<th scope="row" class="table-data"  >{{ section.class_name }}</th>
                         <th scope="row" class="table-data">{{ section.class_strength }}</th>
-                  
                         <th scope="row" class="table-data"> <a href="{% url 'update-classview' section.class_id %}" class="btn btn-sm btn-info">Update</a></th>
-                   
                         <th scope="row" class="table-data"> <a href="{% url 'delete-class' section.class_id %}" class="btn btn-sm btn-danger" >Remove</a></th>
-
-                        <th scope="row" class="table-data"> <a href="{% url 'generate-timetable' section.class_id %}" class="btn btn-sm btn-danger" >Generate Timetable</a></th>
-                
-                        <th scope="row" class="table-data"> <a href="{% url 'timetable' section.class_id %}" class="btn btn-sm btn-danger" >View Timetable</a></th>
-					</tr>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
