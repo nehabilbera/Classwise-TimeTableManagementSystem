@@ -28,8 +28,8 @@ class CourseForm(ModelForm):
 class DateIn(DateInput):
     input_type = "date"
 
+
 class ProfessorForm(ModelForm):
-    
     class Meta:
         model = Professor
         fields = ['user','professor_id', 'professor_name','dob','professor_email', 'working_hours','available_hours']
@@ -41,6 +41,7 @@ class ProfessorForm(ModelForm):
 
 class TimeIn(TimeInput):
     input_type = "time"
+
 
 class ClassForm(ModelForm):
     class Meta:
@@ -69,6 +70,8 @@ class ClassForm(ModelForm):
             "break_start_2": TimeIn(),
             "break_end_2": TimeIn(),
         }
+
+
 class DepartmentForm(ModelForm):
     class Meta:
         model= Department
@@ -90,11 +93,11 @@ class ClassCourseForm(ModelForm):
         fields = ['user','class_id','course_id','professor_id']
         exclude = ['user']
         labels={'course_id':'Subject name','professor_id':'professor_name'}
-    def __init__(self, user, *args,  **kwargs):
+    def __init__(self, *args,  **kwargs):
         super(ClassCourseForm, self).__init__(*args, **kwargs)
-        self.fields['class_id'].queryset = Class.objects.filter(user=user)
-        self.fields['professor_id'].queryset = Professor.objects.filter(user=user)
-        self.fields['course_id'].queryset = Course.objects.filter(user=user)
+        self.fields['class_id'].queryset = Class.objects.filter()
+        self.fields['professor_id'].queryset = Professor.objects.filter()
+        self.fields['course_id'].queryset = Course.objects.filter()
 
 class ActivityForm(ModelForm):
     class Meta:
@@ -113,10 +116,11 @@ class ActivityForm(ModelForm):
     ('Saturday', 'Saturday')
     )
     day = MultipleChoiceField(choices=WEEK_DAY)
-    def __init__(self, user, *args,  **kwargs):
+    def __init__(self, *args,  **kwargs):
         super(ActivityForm, self).__init__(*args, **kwargs)
         self.fields['start_time'].initial = 1
-        self.fields['course'].queryset = ClassCourse.objects.filter(user=user)
+        self.fields['course'].queryset = ClassCourse.objects.filter()
+
 
 class ActivityFormUpdate(ModelForm):
     class Meta:
@@ -126,7 +130,6 @@ class ActivityFormUpdate(ModelForm):
         labels = {
             'activity_type':'Should be Fixed During Generation?(Fixed/Replace) '
         }
-    def __init__(self, user, *args,  **kwargs):
+    def __init__(self, *args,  **kwargs):
         super(ActivityFormUpdate, self).__init__(*args, **kwargs)
-        self.fields['course'].queryset = ClassCourse.objects.filter(user=user)
-
+        self.fields['course'].queryset = ClassCourse.objects.filter()

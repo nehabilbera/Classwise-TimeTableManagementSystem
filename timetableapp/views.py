@@ -89,7 +89,6 @@ def CourseView(request):
         cors = course.save(commit = False)
         if course.is_valid():
             # messages.success(request, 'Course has been added successfully.')
-            cors.user = request.user
             try:
                 cors.save()
                 context['success'] = 'Course has been added successfully.'
@@ -157,7 +156,6 @@ def DepartmentView(request):
             # messages.success(request, 'Professor has been added successfully.')
             context['success'] = 'form has been added successfully.'
             depart = department.save(commit = False)
-            depart.user = request.user
             depart.save()
         else:
             # messages.error(request, 'Professor already exists or you have added wrong attributes.')
@@ -221,7 +219,6 @@ def ProfessorView(request):
             # messages.success(request, 'Professor has been added successfully.')
             context['success'] = 'Professor has been added successfully.'
             prof = professor.save(commit = False)
-            prof.user = request.user
             prof.save()
         else:
             # messages.error(request, 'Professor already exists or you have added wrong attributes.')
@@ -281,7 +278,6 @@ def ClassView(request):
         if section.is_valid():  
             # messages.success(request, 'Class has been added.')
             sec = section.save(commit = False)
-            sec.user = request.user
             try:
                 sec.save()
                 context['success'] = 'Class has been added.'
@@ -327,7 +323,7 @@ def deleteClass(request, pk):
     deleteClass = Class.objects.get(class_id=pk)
     context = {'delete': deleteClass}
     if request.method == 'POST':
-        deleteActivities(request.user,pk)
+        deleteActivities(pk)
         ClassCourse.objects.filter(class_id=deleteClass).delete()
         deleteClass.delete()
         return redirect('class_view')
@@ -336,11 +332,11 @@ def deleteClass(request, pk):
 
 @login_required(login_url='login')
 def ClassCourseView(request):
-    sectioncourse = ClassCourseForm(request.user)
+    sectioncourse = ClassCourseForm()
     sectioncourses = ClassCourse.objects.filter()
     context = {'sectioncourse': sectioncourse, 'sectioncourses': sectioncourses}
     if request.method == 'POST':
-        sectioncourse = ClassCourseForm(request.user,request.POST)
+        sectioncourse = ClassCourseForm(request.POST)
         if sectioncourse.is_valid():
             try:
                 sectioncourse.save()
@@ -362,10 +358,10 @@ def ClassCourseTable(request):
 @login_required(login_url='login')
 def updateClassCourse(request, pk):
     assign = ClassCourse.objects.get(id=pk)
-    sectioncourse = ClassCourseForm(request.user,instance=assign)
+    sectioncourse = ClassCourseForm(instance=assign)
     context = {'sectioncourse': sectioncourse}
     if request.method == 'POST':
-        sectioncourse = ClassCourseForm(request.user,request.POST, instance=assign)
+        sectioncourse = ClassCourseForm(request.POST, instance=assign)
         if sectioncourse.is_valid():
             try:
                 sectioncourse.save()
@@ -628,17 +624,17 @@ def TimeTableView(request, id):
     for i in breakcounts:
         breaklist.append(timelist[i+tmp])
         tmp += 1
-    activityform = ActivityForm(request.user)
+    activityform = ActivityForm()
     
     if request.method == 'POST':
-        actform = ActivityForm(request.user, request.POST)
+        actform = ActivityForm(request.POST)
         if actform.is_valid():
             act = actform.save(commit=False)
             act.end_time = act.start_time
             act.start_time = act.start_time - 1
             act.day = act.day[2:-2]
             act.activity_id = act.day +'-'+ str(act.start_time) +'-'+ act.course.class_id.class_id
-            Activity.objects.filter(user=request.user,activity_id=act.activity_id).delete()
+            Activity.objects.filter(activity_id=act.activity_id).delete()
             act.save()
         else:
             context['message'] = 'Error editing activity'
@@ -650,12 +646,12 @@ def TimeTableView(request, id):
     
 @login_required(login_url='login')
 def AddActivity(request, pk):
-    activity = Activity.objects.get(user=request.user,activity_id=pk)
-    section = Class.objects.get(user=request.user,class_id = activity.class_id)
-    actform = ActivityFormUpdate(request.user,instance = activity)
+    activity = Activity.objects.get(activity_id=pk)
+    section = Class.objects.get(class_id = activity.class_id)
+    actform = ActivityFormUpdate(instance = activity)
     context = {'actform': actform, 'section':section}
     if request.method == 'POST':
-        actform = ActivityFormUpdate(request.user,request.POST,instance=activity)
+        actform = ActivityFormUpdate(request.POST,instance=activity)
         if actform.is_valid():
             actform.save()
             return redirect('/timetable/'+ section.class_id)
