@@ -65,6 +65,7 @@ class Professor(models.Model):
     #         except AttributeError:
     #             raise ValidationError('Invalid date format. It must be in YYYY-MM-DD format.')
 
+
 class Course(models.Model):
     COURSE_TYPE = (
         ('Theory', 'Theory'),
@@ -89,7 +90,6 @@ class Course(models.Model):
             raise ValidationError('Cant put 123')
         return super().save(*args, **kwargs)
 
-    
 
 class Class(models.Model):
     WEEK_DAY = (

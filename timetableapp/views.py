@@ -41,7 +41,7 @@ def loginPage(request):
             else:
                 context['message'] = 'Username or Password is Incorrect.'
         
-        return render(request, 'teacher/teacher_login.html', context)
+        return render(request, 'timetableapp/login.html', context)
 
 def Logout(request):
     logout(request)
@@ -194,7 +194,7 @@ def updateDepartmentView(request, dep_name, b_name, sem):
         else:
             context['message'] = 'Invalid details.'
 
-    return render(request, 'timetableapp/ViewDepartment.html', context)
+    return render(request, 'department/ViewDepartment.html', context)
 
 
 @login_required(login_url='login')
@@ -257,7 +257,7 @@ def updateProfessorView(request, pk):
         else:
             context['message'] = 'Invalid details.'
 
-    return render(request, 'timetableapp/ViewSection.html', context)
+    return render(request, 'professor/UpdateProfessor.html', context)
 
 
 @login_required(login_url='login')
@@ -290,7 +290,7 @@ def ClassView(request):
         else:
             # messages.error(request, 'Do not enter the same class ID')
             context['message'] = 'You have entered Wrong Attributes or haven\'t selected the Days'
-    return render(request, 'timetableapp/AddClass.html', context)
+    return render(request, 'class/AddClass.html', context)
 
 
 @login_required(login_url='login')
@@ -300,7 +300,7 @@ def ClassTable(request):
     context = {'sections': sections}
     context.update(errors)
     errors = {}
-    return render(request, 'timetableapp/ClassTable.html', context)
+    return render(request, 'class/ClassTable.html', context)
 
 
 @login_required(login_url='login')
@@ -319,7 +319,7 @@ def updateClassView(request, pk):
                 context['message'] = 'Class ID already exists'
         else:
             context['message'] = 'You have entered Wrong Attributes or haven\'t selected the Days'
-    return render(request, 'timetableapp/ViewClass.html', context)
+    return render(request, 'class/ViewClass.html', context)
  
 
 @login_required(login_url='login')
@@ -331,7 +331,7 @@ def deleteClass(request, pk):
         ClassCourse.objects.filter(class_id=deleteClass).delete()
         deleteClass.delete()
         return redirect('class_view')
-    return render(request, 'timetableapp/deleteClass.html', context)
+    return render(request, 'class/deleteClass.html', context)
 
 
 @login_required(login_url='login')
@@ -349,14 +349,14 @@ def ClassCourseView(request):
                 context['message'] = 'Can not add duplicate course for class. Check for existing records.'
             except:
                 context['message'] = 'ERROR'
-    return render(request, 'timetableapp/AddClassCourse.html', context)
+    return render(request, 'classCourse/AddClassCourse.html', context)
 
 
 @login_required(login_url='login')
 def ClassCourseTable(request):
     AssignList= ClassCourse.objects.filter()
     context = {'AssignList': AssignList}
-    return render(request, 'timetableapp/ClassCourseTable.html', context)
+    return render(request, 'classCourse/ClassCourseTable.html', context)
 
 
 @login_required(login_url='login')
@@ -374,7 +374,7 @@ def updateClassCourse(request, pk):
                 context['message'] = 'Can not add duplicate course for class. Check for existing records.'
             except:
                 context['message'] = 'ERROR'
-    return render(request, 'timetableapp/AddClassCourse.html', context)
+    return render(request, 'classCourse/AddClassCourse.html', context)
 
 
 @login_required(login_url='login')
@@ -385,28 +385,27 @@ def deleteClassCourse(request, pk):
         ClassCourse.objects.filter(id=pk).delete()
         deleteAssign.delete()
         return redirect('view-classcourse')
-    return render(request, 'timetableapp/deleteClassCourse.html', context)
+    return render(request, 'classCourse/deleteClassCourse.html', context)
 
 
 @login_required(login_url='login')
 def GenerateTimeTable(request, id):
-    currentUser = request.user
     try:
-        section = Class.objects.get(user=currentUser,class_id=id)
-        sectioncourses = list(ClassCourse.objects.filter(user=currentUser,class_id=section))
-    except Class.DoesNotExist:
+        section = Class.objects.get(class_id=id)
+        sectioncourses = list(ClassCourse.objects.filter(class_id=section))
+    except Class.DoesNotExist: 
         messages.error(request, 'Class does not exist')
-        return redirect('generate-timetable')
+        return redirect('manage-timetable')
 
     if len(sectioncourses) <= 0:
         messages.error(request, 'Courses does not exist.')
-        return redirect('generate-timetable')
+        return redirect("manage-timetable")
 
-    if Activity.objects.filter(user=currentUser,activity_type='Replaceable',class_id=id).count() != 0:
-        deleteActivities(currentUser,id,"Theory")
-        deleteActivities(currentUser,id,"Lab")
+    if Activity.objects.filter(activity_type='Replaceable',class_id=id).count() != 0:
+        deleteActivities(id,"Theory")
+        deleteActivities(id,"Lab")
     totalDays = len(section.week_day)
-    sessionlist, breaktime = timeCalculate(currentUser,id)
+    sessionlist, breaktime = timeCalculate(id)
     lenSessList = len(sessionlist)-len(breaktime)
     breaktime = [0] + breaktime
     workingHours = totalDays * len(sessionlist)
@@ -418,8 +417,7 @@ def GenerateTimeTable(request, id):
             break
 
         try:
-            course: Course = Course.objects.get(user=currentUser,course_type = 'Lab',
-                                                course_id=sectioncourses[k].course_id.course_id)
+            course: Course = Course.objects.get(course_type='Lab',course_id=sectioncourses[k].course_id.course_id)
         except Course.DoesNotExist:
             # messages.error(request, 'Lab Course not found')
             continue
@@ -430,14 +428,14 @@ def GenerateTimeTable(request, id):
             # messages.error(request, 'Professor not found')
             continue
 
-        courseCount = Activity.objects.filter(user=currentUser,course=sectioncourses[k]).count()
+        courseCount = Activity.objects.filter(course=sectioncourses[k]).count()
         courseLecs = course.credit_hours - courseCount
         lecDuration = course.contact_hours / course.credit_hours
         j = 0
         while j < courseLecs:
             lecFlag = True
             if DupNum > workingHours + 5:
-                deleteActivities(currentUser,id,'Lab')
+                deleteActivities(id,'Lab')
                 # messages.error(request, 'Solution does not exist.')
                 errors['message'] = 'Solution does not exist.'
                 DupNum +=1
@@ -461,12 +459,10 @@ def GenerateTimeTable(request, id):
                 activityID = [section.week_day[lecDay]] * int(lecDuration)
                 for i in range(int(lecDuration)):
                     activityID[i] += '-' + str(lecStartTime + i) + '-' + str(section.class_id)
-                    if Activity.objects.filter(user=currentUser,
-                                            day=section.week_day[lecDay],
+                    if Activity.objects.filter(day=section.week_day[lecDay],
                                             start_time=lecStartTime + i,
                                             class_id=section.class_id).count() != 0 or \
-                            Activity.objects.filter(user=currentUser,
-                                                day=section.week_day[lecDay],
+                            Activity.objects.filter(day=section.week_day[lecDay],
                                                 start_time=lecStartTime + i,
                                                 professor_id=professor.professor_id).count() != 0 :
                         activityFlag = False
@@ -493,21 +489,19 @@ def GenerateTimeTable(request, id):
             break
 
         try:
-            course: Course = Course.objects.get(user=currentUser,
-                                                course_id=sectioncourses[k].course_id.course_id,
+            course: Course = Course.objects.get(course_id=sectioncourses[k].course_id.course_id,
                                                 course_type = 'Theory')
         except Course.DoesNotExist:
             # messages.error(request, 'Course not found')
             continue
 
         try:
-            professor = Professor.objects.get(user=currentUser,
-                                              professor_id=sectioncourses[k].professor_id.professor_id)
+            professor = Professor.objects.get(professor_id=sectioncourses[k].professor_id.professor_id)
         except Professor.DoesNotExist:
             # messages.error(request, 'Professor not found')
             continue
 
-        courseCount = Activity.objects.filter(user=currentUser,course=sectioncourses[k]).count()
+        courseCount = Activity.objects.filter(course=sectioncourses[k]).count()
         courseLecs = course.credit_hours - courseCount
         lecDuration = course.contact_hours / course.credit_hours
         j = 0
@@ -517,7 +511,7 @@ def GenerateTimeTable(request, id):
             lecFlag = True
             
             if DupNum > workingHours + 20:
-                deleteActivities(currentUser,id,'Theory')
+                deleteActivities(id,'Theory')
                 # messages.error(request, 'Solution does not exist.')
                 errors['message'] = 'Solution does not exist.'
                 DupNum +=1
@@ -544,12 +538,10 @@ def GenerateTimeTable(request, id):
                 activityID = [section.week_day[lecDay]] * int(lecDuration)
                 for i in range(int(lecDuration)):
                     activityID[i] += '-' + str(lecStartTime + i) + '-' + str(section.class_id)
-                    if Activity.objects.filter(user=currentUser,
-                                            day=section.week_day[lecDay],
+                    if Activity.objects.filter(day=section.week_day[lecDay],
                                             start_time=lecStartTime + i,
                                             class_id=section.class_id).count() != 0 or \
-                            Activity.objects.filter(user=currentUser,
-                                                day=section.week_day[lecDay],
+                            Activity.objects.filter(day=section.week_day[lecDay],
                                                 start_time=lecStartTime + i,
                                                 professor_id=professor.professor_id).count() != 0 :
                         activityFlag = False
@@ -569,28 +561,28 @@ def GenerateTimeTable(request, id):
                     j += 1
 
     # messages.success(request, 'Timetable generated')
-    return redirect('generate-timetable')
+    return redirect("manage-timetable")
 
 
 
 
-def deleteActivities(usr,id,type=None):
+def deleteActivities(id,type=None):
     if type == None:
-        activities = list(Activity.objects.filter(user=usr,class_id=id,activity_type='Replaceable'))
+        activities = list(Activity.objects.filter(class_id=id,activity_type='Replaceable'))
     else:
-        activities = list(Activity.objects.filter(user=usr,class_id=id,activity_type='Replaceable',course_type=type))
+        activities = list(Activity.objects.filter(class_id=id,activity_type='Replaceable',course_type=type))
     for activity in activities:
         #course = Course.objects.get(course_id=activity.course_id)
         professor = Professor.objects.get(professor_id=activity.professor_id)
         professor.available_hours += 1
         professor.save()
     if type == None:
-        Activity.objects.filter(user=usr,class_id=id,activity_type='Replaceable').delete()
+        Activity.objects.filter(class_id=id,activity_type='Replaceable').delete()
     else:
-        Activity.objects.filter(user=usr,class_id=id,activity_type='Replaceable',course_type=type).delete()
+        Activity.objects.filter(class_id=id,activity_type='Replaceable',course_type=type).delete()
 
-def timeCalculate(usr,id):
-    section = Class.objects.get(user=usr,class_id=id)
+def timeCalculate(id):
+    section = Class.objects.get(class_id=id)
     timelist = []
     breakPosition=[]
     st = datetime.combine(datetime.today(),section.start_time)
@@ -604,12 +596,12 @@ def timeCalculate(usr,id):
             timelist.append( [str(st.time())[0:5] , str(e.time())[0:5]])
             st = e
             breakPosition.append(count)
-        if st.time()==section.break_start_2:
-            s = str(st.time())[0:5]
-            e = datetime.combine(datetime.today(),section.break_end_2)
-            timelist.append( [str(st.time())[0:5] , str(e.time())[0:5]])
-            st = e
-            breakPosition.append(count)
+        # if st.time()==section.break_start_2:
+        #     s = str(st.time())[0:5]
+        #     e = datetime.combine(datetime.today(),section.break_end_2)
+        #     timelist.append( [str(st.time())[0:5] , str(e.time())[0:5]])
+        #     st = e
+        #     breakPosition.append(count)
             
         s = str(st.time())[0:5]
         st = st + timedelta(minutes=min)
@@ -622,15 +614,15 @@ def timeCalculate(usr,id):
 @login_required(login_url='login')
 def TimeTableView(request, id):
     try:
-        section = Class.objects.get(user=request.user,class_id=id)
+        section = Class.objects.get(class_id=id)
     except Class.DoesNotExist:
         # messages.error(request, 'Activity does not exist')
-        return redirect('generate-timetable')
+        return redirect("manage-timetable")
 
-    courses = Course.objects.filter(user=request.user)
-    professors = Professor.objects.filter(user=request.user)
-    activities = Activity.objects.filter(user=request.user,class_id=id)
-    timelist,breakcounts = timeCalculate(request.user,id)
+    courses = Course.objects.filter()
+    professors = Professor.objects.filter()
+    activities = Activity.objects.filter(class_id=id)
+    timelist,breakcounts = timeCalculate(id)
     breaklist=[]
     tmp=0
     for i in breakcounts:
@@ -653,7 +645,7 @@ def TimeTableView(request, id):
     context = {'section': section, 'courses': courses, 'professors':professors, 
                     'activities': activities, 'timings':timelist, 'timingss':range(section.no_sessions), 'breaks':breakcounts,
                     'breaklist':breaklist , 'totalLength':section.no_sessions+len(breakcounts),'activityform':activityform}
-    return render(request, 'timetableapp/TimeTable.html', context)
+    return render(request, 'timetable/TimeTable.html', context)
     
     
 @login_required(login_url='login')
@@ -702,12 +694,12 @@ def professor_logout(request):
 @login_required(login_url='login')
 def ManageTimetable(request): 
     global errors
-    sections = Class.objects.filter(user=request.user)
+    sections = Class.objects.filter()
     department1 = Department.objects.all()
     
     context = {'sections': sections, 'department1': department1}
     context.update(errors)
-    return render(request, 'timetableapp/ManageTimetable.html', context)
+    return render(request, 'timetable/ManageTimetable.html', context)
 
 
 @login_required(login_url='login')

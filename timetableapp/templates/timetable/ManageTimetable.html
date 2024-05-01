@@ -2,6 +2,9 @@
 {% load static %}
 {% block content %}
 
+{% if errors %}
+alert({{errors}})
+{% endif %}
 
 <div class="viewcontainer">
   <div class="container-fluid">
@@ -81,7 +84,6 @@
           </div>
         </tr>	
       </thead>
-
         
       <tbody class="tab-content">
         {% for department in department1 %}
