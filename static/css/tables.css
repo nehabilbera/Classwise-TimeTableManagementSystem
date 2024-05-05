@@ -36,7 +36,7 @@ h6 {
   border: 1px solid #eeeeee;
    overflow-y: auto;
   overflow-x: auto;
-  overflow-style: marquee-line;
+  /* overflow-style: marquee-line; */
   height: max-content;
 }
 
@@ -44,7 +44,8 @@ h6 {
   width: 100%;
   background: #000;
   padding: 18px 0;
-  position: sticky; top: 0;
+  /* position: sticky;  */
+  top: 0;
 
 }
 
@@ -111,6 +112,11 @@ h6 {
   font-family: Roboto, sans-serif;
   text-align: justify;
 
+}
+@media (max-width:580px){
+  .searchbox{
+    margin-top: 20px;
+  }
 }
 .searchbox:focus{
   width: 340px;
